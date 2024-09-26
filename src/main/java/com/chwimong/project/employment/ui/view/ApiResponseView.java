@@ -1,10 +1,16 @@
 package com.chwimong.project.employment.ui.view;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class ApiResponseView {
-    //TODO: Success View
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ApiResponseView<T> {
+    private final T data;
+
+    public ApiResponseView(T data) {
+        this.data = data;
+    }
 }
