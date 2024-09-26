@@ -1,6 +1,5 @@
 package com.chwimong.project.employment.usecase;
 
-import com.chwimong.project.employment.dto.EmploymentDTO;
 import lombok.*;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.chwimong.project.employment.service.impl;
 
-import com.chwimong.project.employment.dto.EmploymentDTO;
 import com.chwimong.project.employment.persisntence.mongo.repository.EmploymentEntityRepository;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import lombok.extern.slf4j.Slf4j;
