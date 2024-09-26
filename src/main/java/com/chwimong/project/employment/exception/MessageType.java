@@ -1,7 +1,9 @@
 package com.chwimong.project.employment.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum MessageType {
     BAD_REQUEST     ("Check API request URL protocol, parameter, etc. for errors", HttpStatus.BAD_REQUEST),
     NOT_FOUND ("No data was found for the server. Please refer to parameter description.", HttpStatus.NOT_FOUND),
