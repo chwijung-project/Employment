@@ -1,6 +1,7 @@
 package com.chwimong.project.employment.ui.controller;
 
 
+import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.ui.view.EmploymentView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
@@ -24,7 +25,7 @@ public class EmploymentController {
     }
 
     @GetMapping("")
-    public ResponseEntity<EmploymentListView> getEmployments() {
+    public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments() {
         //TODO: input param needs
         //TODO: service call
 
@@ -32,7 +33,7 @@ public class EmploymentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmploymentView> getEmployment(@PathVariable String id) {
+    public ResponseEntity<ApiResponseView<EmploymentView>> getEmployment(@PathVariable String id) {
 
         return ResponseEntity.ok().build();
     }
