@@ -6,8 +6,8 @@ import lombok.*;
 import java.util.List;
 
 public interface EmploymentFindUseCase {
-    List<EmploymentDTO> getEmployments(); //TODO: FindQuery 를 Param 으로
-    EmploymentDTO getEmployment(EmploymentFindQuery query);
+    List<FindEmploymentResult> getEmployments();
+    FindEmploymentResult getEmployment(EmploymentFindQuery query);
 
     @NoArgsConstructor
     @EqualsAndHashCode(callSuper = false)
