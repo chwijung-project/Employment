@@ -16,7 +16,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     }
 
     @Override
-    public EmploymentDTO getEmployment(String id) {
+    public EmploymentDTO getEmployment(EmploymentFindQuery query) {
         return null;
     }
 }
