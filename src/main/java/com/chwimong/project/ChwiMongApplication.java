@@ -1,4 +1,4 @@
-package com.chwimong.project.config;
+package com.chwimong.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,17 +18,4 @@ public class ChwiMongApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ChwiMongApplication.class, args);
 	}
-
-   @Configuration
-   public class WebConfig implements WebMvcConfigurer {
-
-       @Override
-       public void addCorsMappings(CorsRegistry registry) {
-           registry.addMapping("/**")
-                   .allowedOrigins("http://localhost:3000")
-                   .allowedMethods("GET", "POST", "PUT", "DELETE")
-                   .allowedHeaders("*")
-                   .allowCredentials(true);
-       }
-   }
 }
