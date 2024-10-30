@@ -1,7 +1,7 @@
 package com.chwimong.project.employment.ui.view;
 
-import com.chwimong.project.config.Page;
 import com.chwimong.project.employment.exception.MessageType;
+import com.chwimong.project.employment.ui.common.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -12,29 +12,33 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "status", "message", "data", "pageInfo" })
+@JsonPropertyOrder({ "meta", "data" })
 public class ApiResponseView<T> {
     private final T data;
-    private final Page pageInfo;
+    private final MetaData meta;
 
-    @JsonIgnore
-    private final MessageType messageType;
-
-    private ApiResponseView(MessageType messageType, T data, Page pageInfo) {
-        this.messageType = messageType;
+    private ApiResponseView(T data, MetaData meta) {
         this.data = data;
-        this.pageInfo = pageInfo;
+        this.meta = meta;
     }
 
     public static <T> ApiResponseView<T> of(MessageType messageType, T data, Page pageInfo) {
-        return new ApiResponseView<>(messageType, data, pageInfo);
+        return new ApiResponseView<>(
+                data,
+                new MetaData(messageType, pageInfo)
+        );
     }
 
-    public int getStatus() {
-        return messageType.getStatus().value();
-    }
+    @Getter
+    private static class MetaData {
+        private final int status;
+        private final String message;
+        private final Page pageInfo;
 
-    public String getMessage() {
-        return messageType.getMessage();
+        private MetaData(MessageType messageType, Page pageInfo) {
+            this.status = messageType.getStatus().value();
+            this.message = messageType.getMessage();
+            this.pageInfo = pageInfo;
+        }
     }
 }
