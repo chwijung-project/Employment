@@ -5,24 +5,24 @@ import java.util.stream.Collectors;
 
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentResult;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
 public class EmploymentListView {
-	
-    private final List<EmploymentView> employments;
+    private List<EmploymentsInfo> employments;
 
-    public EmploymentListView(List<FindEmploymentResult> result) {
-        this.employments = result.stream()
-            .map(this::convertToEmploymentView)
+    public EmploymentListView(List<FindEmploymentResult> results) {
+        this.employments = results.stream()
+            .map(this::convertToEmploymentInfo)
             .collect(Collectors.toList());
     }
 
-    private EmploymentView convertToEmploymentView(FindEmploymentResult result) {
-        return new EmploymentView(
-    		result.getRecruit(),
+    private EmploymentsInfo convertToEmploymentInfo(FindEmploymentResult result) {
+        return new EmploymentsInfo(
+            result.getRecruit(),
             result.getCompany(),
             result.getRegion(),
             result.getJob(),
@@ -33,5 +33,18 @@ public class EmploymentListView {
             result.getLogo()
         );
     }
-}
 
+    @Getter
+    @AllArgsConstructor
+    public static class EmploymentsInfo {
+        private String recruit;
+        private String company;
+        private String region;
+        private String job;
+        private String url;
+        private String endDate;
+        private String closed;
+        private String crawlingDate;
+        private String logo;
+    }
+}

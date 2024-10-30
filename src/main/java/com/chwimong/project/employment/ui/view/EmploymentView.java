@@ -1,12 +1,10 @@
 package com.chwimong.project.employment.ui.view;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
-@AllArgsConstructor
 public class EmploymentView {
 	private String recruit;
     private String company;
