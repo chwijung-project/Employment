@@ -1,7 +1,11 @@
-package com.chwimong.project.config;
+package com.chwimong.project.employment.ui.common;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
+@Getter
+@Setter
 @ToString
 public class Criteria {
     private int pageNum;
@@ -15,29 +19,5 @@ public class Criteria {
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
         this.amount = amount;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public String getSearchValue() {
-        return searchValue;
-    }
-
-    public void setSearchValue(String searchValue) {
-        this.searchValue = searchValue;
     }
 }
