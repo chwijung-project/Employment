@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.chwimong.project.config.ChwiMongApplication;
+import com.chwimong.project.ChwiMongApplication;
 
 @SpringBootTest(classes = ChwiMongApplication.class)
 public class S3ServiceTest {
