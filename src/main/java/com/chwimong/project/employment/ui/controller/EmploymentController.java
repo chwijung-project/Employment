@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.chwimong.project.config.Criteria;
-import com.chwimong.project.config.Page;
+
 import com.chwimong.project.employment.exception.MessageType;
+import com.chwimong.project.employment.ui.common.Criteria;
+import com.chwimong.project.employment.ui.common.Page;
+import com.chwimong.project.employment.ui.request.FindEmploymentRequest;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
@@ -30,9 +32,18 @@ public class EmploymentController {
         this.employmentFindUseCase = employmentFindUseCase;
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments(@ModelAttribute EmploymentFindQuery query) {
+    @GetMapping("/")
+    public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments(@ModelAttribute FindEmploymentRequest request) {
 
+    	EmploymentFindQuery query = new EmploymentFindQuery(
+	        request.getId(),
+	        request.getJob(), 
+	        request.getRegion(),
+	        request.getSort(),
+	        request.getClosed(),
+	        request.getOffset()
+	    );
+    	
     	Criteria cri = new Criteria(Integer.valueOf(query.getOffset()), 10);
     	int total = employmentFindUseCase.getEmploymentsSize();
     	
@@ -46,9 +57,4 @@ public class EmploymentController {
         return ResponseEntity.ok(responseView);
     }
     
-//  @GetMapping("/{id}")
-//  public ResponseEntity<ApiResponseView<EmploymentView>> getEmployment(@ModelAttribute EmploymentFindQuery query) {
-//
-//      return ResponseEntity.ok().build();
-//  }
 }
