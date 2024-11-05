@@ -4,45 +4,25 @@ import lombok.*;
 
 import java.util.List;
 
-import com.chwimong.project.config.Criteria;
+import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
+import com.chwimong.project.employment.ui.common.Criteria;
 
 public interface EmploymentFindUseCase {
 	
     List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     int getEmploymentsSize();
     
-    FindEmploymentResult getEmployment(EmploymentFindQuery query);
-    
-    @NoArgsConstructor
+    @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
-    @Setter
-    @ToString
     class EmploymentFindQuery {
         
     	String id;
     	String job;
     	String region;
     	String sort;
-    	String closed;
+    	Boolean closed;
     	String offset;
-
-        public EmploymentFindQuery(String id, String job, String region, String sort, String closed, String offset) {
-            this.id = id;
-            this.job = job;
-            this.region = region;
-            this.sort = sort;
-            this.closed = closed;
-            this.offset = offset;
-        }
-        
-        public String getOffset() {
-            return (offset == null || offset.isEmpty()) ? "1" : offset;
-        }
-        
-        public String getSort() {
-            return (sort == null || sort.isEmpty()) ? "latest_order" : sort;
-        }
     }
 
     @Getter
@@ -55,7 +35,7 @@ public interface EmploymentFindUseCase {
         private String job;
         private String url;
         private String endDate;
-        private String closed;
+        private Boolean closed;
         private String crawlingDate;
         private String logo;
     }

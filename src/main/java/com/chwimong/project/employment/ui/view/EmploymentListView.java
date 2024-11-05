@@ -43,7 +43,7 @@ public class EmploymentListView {
         private String job;
         private String url;
         private String endDate;
-        private String closed;
+        private Boolean closed;
         private String crawlingDate;
         private String logo;
     }
