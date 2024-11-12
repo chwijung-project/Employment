@@ -4,26 +4,39 @@ import lombok.*;
 
 import java.util.List;
 
-public interface EmploymentFindUseCase {
-    List<FindEmploymentResult> getEmployments();
-    FindEmploymentResult getEmployment(EmploymentFindQuery query);
+import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
+import com.chwimong.project.employment.ui.common.Criteria;
 
-    @NoArgsConstructor
+public interface EmploymentFindUseCase {
+	
+    List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
+    int getEmploymentsSize();
+    
+    @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
-    @ToString
     class EmploymentFindQuery {
-        String id;
-
-        public EmploymentFindQuery(String id) {
-            this.id = id;
-        }
+        
+    	String id;
+    	String job;
+    	String region;
+    	String sort;
+    	Boolean closed;
+    	String offset;
     }
 
     @Getter
     @ToString
     @Builder
     class FindEmploymentResult {
-
+    	private String recruit;
+        private String company;
+        private String region;
+        private String job;
+        private String url;
+        private String endDate;
+        private Boolean closed;
+        private String crawlingDate;
+        private String logo;
     }
 }
