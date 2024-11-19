@@ -1,19 +1,17 @@
 FROM eclipse-temurin:21-jre-alpine
 
 VOLUME /tmp
+WORKDIR /app
+
+RUN apk add --no-cache htop curl
 
 COPY build/libs/*.jar app.jar
 
-RUN apk add --no-cache gcompat
-RUN addgroup -S kakao && adduser -S -G kakao deploy
-
-USER deploy
+ENTRYPOINT [ "java", \
+    "-Djava.security.egd=file:///dev/urandom", \
+    "-Dsun.net.inetaddr.ttl=0", \
+    "-Xlog:gc*=info:file=/tmp/gc.log:time,uptime,level,tags", \
+    "-jar", "/app.jar" \
+]
 
 EXPOSE 8080
-
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS \
--XX:MaxRAMPercentage=75.0 \
--XX:MaxMetaspaceSize=256m \
--Djava.security.egd=file:///dev/urandom \
--Dsun.net.inetaddr.ttl=0 \
--jar /app.jar" ]

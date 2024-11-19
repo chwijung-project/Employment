@@ -1,8 +1,8 @@
-name: EC2 Image Build on Employment_develop
+name: EC2 Image Build on Employment_feature
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ feature/employment ]
 
 jobs:
   docker:
@@ -62,3 +62,9 @@ jobs:
               -p 8080:8080 \
               --restart unless-stopped \
               590183984850.dkr.ecr.ap-northeast-2.amazonaws.com/employment_develop:latest
+
+      # 배포 검증
+      - name: Verify deployment
+        run: |
+          sleep 30  # 애플리케이션 시작 대기
+          curl -f http://${{ secrets.EC2_REMOTE_IP }}:8080/actuator/health || exit 1
