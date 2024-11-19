@@ -5,7 +5,7 @@ WORKDIR /app
 
 RUN apk add --no-cache htop curl
 
-COPY build/libs/*.jar app.jar
+COPY build/libs/*.jar /app/app.jar
 
 ENTRYPOINT [ "java", \
     "-Djava.security.egd=file:///dev/urandom", \
