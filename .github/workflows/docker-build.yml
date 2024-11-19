@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: ./Dockerfile
+          file: ./dockerfile
           push: true
           tags: 590183984850.dkr.ecr.ap-northeast-2.amazonaws.com/employment_develop:latest
 
