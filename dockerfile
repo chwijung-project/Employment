@@ -1,6 +1,7 @@
 FROM eclipse-temurin:21-jre-alpine
 
 VOLUME /tmp
+
 WORKDIR /app
 
 RUN apk add --no-cache htop curl
