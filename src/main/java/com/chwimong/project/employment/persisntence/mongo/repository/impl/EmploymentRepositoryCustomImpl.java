@@ -37,9 +37,12 @@ public class EmploymentRepositoryCustomImpl implements EmploymentRepositoryCusto
         Criteria criteria = new Criteria();
         
         if (query.getClosed() != null) {
-            criteria = query.getClosed()
-                ? Criteria.where("closed").ne("")
-                : Criteria.where("closed").is("");
+            if (query.getClosed()) {
+                criteria = new Criteria().orOperator(
+                    Criteria.where("closed").is(""),
+                    Criteria.where("closed").is(null)
+                );
+            } 
         }
         
         // 추가될 파라미터만 명시
