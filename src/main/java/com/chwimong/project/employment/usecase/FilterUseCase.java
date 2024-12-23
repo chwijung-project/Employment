@@ -1,15 +1,14 @@
 package com.chwimong.project.employment.usecase;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 public interface FilterUseCase {
 
-	List<UnFilteredEmploymentsResult> findUnFilteredEmployments();
-
+	FilterResult findUnFilteredEmployments();
+	
 	@Getter
     @ToString
     @Builder
@@ -19,4 +18,12 @@ public interface FilterUseCase {
 	    private String require;
 	    private String thanks;
 	}
+	
+	@Getter
+    @AllArgsConstructor
+    class FilterResult {
+        private final int totalCount;
+        private final int successCount;
+        private final boolean isSuccess;
+    }
 }
