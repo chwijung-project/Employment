@@ -50,7 +50,7 @@ jobs:
         with:
           context: .
           file: ./dockerfile
-          push: false
+          push: true
           tags: 590183984850.dkr.ecr.ap-northeast-2.amazonaws.com/employment_develop:latest
           platforms: linux/amd64
           provenance: false
