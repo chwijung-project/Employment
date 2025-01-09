@@ -8,15 +8,24 @@ import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntit
 import com.chwimong.project.employment.ui.common.Criteria;
 
 public interface EmploymentFindUseCase {
-	
+
     List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
-    int getEmploymentsSize();
-    
+    List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
+    int getEmploymentsSize(); //???
+
+    @AllArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @Getter
+    class EmploymentWithCategoryQuery {
+        String category;
+
+    }
+
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
     class EmploymentFindQuery {
-        
+
     	String id;
     	String job;
     	String region;
