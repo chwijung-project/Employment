@@ -2,7 +2,6 @@ package com.chwimong.project.employment.ui.view;
 
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.common.Page;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -29,10 +28,18 @@ public class ApiResponseView<T> {
         );
     }
 
+    public static <T> ApiResponseView<T> of(MessageType messageType, T data) {
+        return new ApiResponseView<>(
+            data,
+            new MetaData(messageType, null)
+        );
+    }
+    
     @Getter
     private static class MetaData {
         private final int status;
         private final String message;
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private final Page pageInfo;
 
         private MetaData(MessageType messageType, Page pageInfo) {

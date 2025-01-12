@@ -26,25 +26,32 @@ public class EmploymentService implements EmploymentFindUseCase {
     public EmploymentService(EmploymentEntityRepository employmentEntityRepository) {
         this.employmentEntityRepository = employmentEntityRepository;
     }
-    
+
     @Override
     public int getEmploymentsSize() {
     	List<EmploymentEntity> employmentEntities = employmentEntityRepository.findAll();
     	return employmentEntities.size();
     }
-    
+
     @Override
     public List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query) {
-    	
+
     	int index = cri.getPageNum() -1;
 		int count = cri.getAmount();
-		
+
 		Pageable paging = PageRequest.of(index, count);
 		Page<EmploymentEntity> employmentEntities = employmentEntityRepository.getEmployments(paging, query);
-    	
+
 		return employmentEntities.stream()
             .map(this::convertToFindEmploymentsResult)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query) {
+        //TODO: 비즈니스 로직 구현
+
+        return null;
     }
 
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {

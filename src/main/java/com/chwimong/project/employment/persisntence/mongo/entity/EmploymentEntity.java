@@ -2,6 +2,7 @@ package com.chwimong.project.employment.persisntence.mongo.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,4 +39,6 @@ public class EmploymentEntity {
     private String crawlingTxt;
     private String crawlingSite;
     private String logo;
+    @Field("jobtitle_filter")
+    private String jobtitleFilter;
 }
