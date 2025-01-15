@@ -1,5 +1,6 @@
 package com.chwimong.project.employment.ui.controller;
 
+import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentSummaryListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
@@ -26,15 +27,14 @@ public class CompactEmploymentController {
 
     @GetMapping("")
     public ResponseEntity<ApiResponseView<EmploymentSummaryListView>> getCompactEmployments(
-            @RequestParam(value = "category", required = false, defaultValue = "no-job") String category
+    		@RequestParam(value = "jobtitle", required = false) String jobtitle
     ) {
-        var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(category);
-
+        var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(jobtitle);
         var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
 
-        //TODO: employment Result to EmploymentSummaryListView
+        EmploymentSummaryListView summaryListView = new EmploymentSummaryListView(employmentResults);
+        ApiResponseView<EmploymentSummaryListView> responseView = ApiResponseView.of(MessageType.OK, summaryListView);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(responseView);
     }
-
 }
