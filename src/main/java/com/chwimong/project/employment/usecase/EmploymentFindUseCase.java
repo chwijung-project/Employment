@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.util.List;
 
-import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
 import com.chwimong.project.employment.ui.common.Criteria;
 
 public interface EmploymentFindUseCase {
@@ -17,8 +16,7 @@ public interface EmploymentFindUseCase {
     @EqualsAndHashCode(callSuper = false)
     @Getter
     class EmploymentWithCategoryQuery {
-        String category;
-
+        String jobtitle;
     }
 
     @AllArgsConstructor
@@ -38,6 +36,7 @@ public interface EmploymentFindUseCase {
     @ToString
     @Builder
     class FindEmploymentResult {
+    	private String id;
     	private String recruit;
         private String company;
         private String region;
@@ -47,5 +46,9 @@ public interface EmploymentFindUseCase {
         private Boolean closed;
         private String crawlingDate;
         private String logo;
+        private String main;
+        private String require;
+        private String thanks;
+        private String fullTxt;
     }
 }
