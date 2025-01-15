@@ -9,6 +9,7 @@ import lombok.ToString;
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmploymentSummaryView {
+	
     private String id;
     private String main;
     private String require;
@@ -16,10 +17,10 @@ public class EmploymentSummaryView {
     private String fullTxt;
 
     public EmploymentSummaryView(EmploymentFindUseCase.FindEmploymentResult result) {
-        this.id = result.getRecruit();
-        this.main = result.getCompany();
-        this.require = result.getRegion();
-        this.thanks = result.getJob();
-        this.fullTxt = result.getUrl();
+        this.id = result.getId();
+        this.main = result.getMain();
+        this.require = result.getRequire();
+        this.thanks = result.getThanks();
+        this.fullTxt = result.getFullTxt();
     }
 }
