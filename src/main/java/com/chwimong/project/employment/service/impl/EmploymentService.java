@@ -13,7 +13,6 @@ import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntit
 import com.chwimong.project.employment.persisntence.mongo.repository.EmploymentEntityRepository;
 import com.chwimong.project.employment.ui.common.Criteria;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
-import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentResult;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +28,7 @@ public class EmploymentService implements EmploymentFindUseCase {
 
     @Override
     public int getEmploymentsSize() {
+    	
     	List<EmploymentEntity> employmentEntities = employmentEntityRepository.findAll();
     	return employmentEntities.size();
     }
@@ -49,9 +49,12 @@ public class EmploymentService implements EmploymentFindUseCase {
 
     @Override
     public List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query) {
-        //TODO: 비즈니스 로직 구현
 
-        return null;
+    	List<EmploymentEntity> entities = employmentEntityRepository.findByJobtitleFilterEquals(query.getJobtitle());
+
+    	return entities.stream()
+	        .map(this::convertToCategoryResult)
+	        .collect(Collectors.toList());
     }
 
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
@@ -65,6 +68,16 @@ public class EmploymentService implements EmploymentFindUseCase {
             .closed(entity.getClosed() == null || entity.getClosed().isEmpty())
             .crawlingDate(entity.getCrawlingDate())
             .logo(entity.getLogo())
+            .build();
+    }
+    
+    private FindEmploymentResult convertToCategoryResult(EmploymentEntity entity) {
+        return FindEmploymentResult.builder()
+            .id(entity.getId())
+            .main(entity.getMain())
+            .require(entity.getRequire())
+            .thanks(entity.getThanks())
+            .fullTxt(entity.getFullTxt())
             .build();
     }
 }
