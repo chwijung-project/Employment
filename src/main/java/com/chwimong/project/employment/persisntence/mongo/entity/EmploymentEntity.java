@@ -41,4 +41,5 @@ public class EmploymentEntity {
     private String logo;
     @Field("jobtitle_filter")
     private String jobtitleFilter;
+    private String fullTxt;
 }
