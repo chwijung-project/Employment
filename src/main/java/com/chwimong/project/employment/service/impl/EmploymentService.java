@@ -27,14 +27,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     }
 
     @Override
-    public int getEmploymentsSize() {
-    	
-    	List<EmploymentEntity> employmentEntities = employmentEntityRepository.findAll();
-    	return employmentEntities.size();
-    }
-
-    @Override
-    public List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query) {
+    public Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query) {
 
     	int index = cri.getPageNum() -1;
 		int count = cri.getAmount();
@@ -42,9 +35,7 @@ public class EmploymentService implements EmploymentFindUseCase {
 		Pageable paging = PageRequest.of(index, count);
 		Page<EmploymentEntity> employmentEntities = employmentEntityRepository.getEmployments(paging, query);
 
-		return employmentEntities.stream()
-            .map(this::convertToFindEmploymentsResult)
-            .collect(Collectors.toList());
+		return employmentEntities.map(this::convertToFindEmploymentsResult);
     }
 
     @Override
