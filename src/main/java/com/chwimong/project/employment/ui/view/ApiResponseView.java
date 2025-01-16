@@ -21,6 +21,11 @@ public class ApiResponseView<T> {
         this.meta = meta;
     }
 
+    private ApiResponseView(T data) {
+        this.data = data;
+        this.meta = null;
+    }
+
     public static <T> ApiResponseView<T> of(MessageType messageType, T data, Page pageInfo) {
         return new ApiResponseView<>(
                 data,
@@ -34,7 +39,7 @@ public class ApiResponseView<T> {
             new MetaData(messageType, null)
         );
     }
-    
+
     @Getter
     private static class MetaData {
         private final int status;
