@@ -1,16 +1,21 @@
 package com.chwimong.project.employment.usecase;
 
-import lombok.*;
-
 import java.util.List;
+
+import org.springframework.data.domain.Page;
 
 import com.chwimong.project.employment.ui.common.Criteria;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
 public interface EmploymentFindUseCase {
 
-    List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
+    Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
-    int getEmploymentsSize(); //???
 
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
