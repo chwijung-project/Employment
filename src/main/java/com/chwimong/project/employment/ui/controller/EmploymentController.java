@@ -1,7 +1,5 @@
 package com.chwimong.project.employment.ui.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +15,6 @@ import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
-import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentResult;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +29,7 @@ public class EmploymentController {
         this.employmentFindUseCase = employmentFindUseCase;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments(@ModelAttribute FindEmploymentRequest request) {
 
     	EmploymentFindQuery query = new EmploymentFindQuery(
@@ -44,14 +41,11 @@ public class EmploymentController {
 	        request.getOffset()
 	    );
     	
-    	Criteria cri = new Criteria(Integer.valueOf(query.getOffset()), 10);
-    	int total = employmentFindUseCase.getEmploymentsSize();
-    	
-    	Page pageInfo = new Page(cri, total);
-    	
-        List<FindEmploymentResult> employmentResults = employmentFindUseCase.getEmployments(cri, query);
-        EmploymentListView employmentListView = new EmploymentListView(employmentResults);
+    	var cri = new Criteria(Integer.valueOf(query.getOffset()), 10);
+    	var resultPage = employmentFindUseCase.getEmployments(cri, query);
+        var pageInfo = new Page(cri, (int) resultPage.getTotalElements());
         
+        EmploymentListView employmentListView = new EmploymentListView(resultPage.getContent());
         ApiResponseView<EmploymentListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView, pageInfo);
         
         return ResponseEntity.ok(responseView);

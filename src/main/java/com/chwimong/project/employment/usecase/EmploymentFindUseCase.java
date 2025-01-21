@@ -1,24 +1,27 @@
 package com.chwimong.project.employment.usecase;
 
-import lombok.*;
-
 import java.util.List;
 
-import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
+import org.springframework.data.domain.Page;
+
 import com.chwimong.project.employment.ui.common.Criteria;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
 public interface EmploymentFindUseCase {
 
-    List<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
+    Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
-    int getEmploymentsSize(); //???
 
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
     class EmploymentWithCategoryQuery {
-        String category;
-
+        String jobtitle;
     }
 
     @AllArgsConstructor
@@ -38,6 +41,7 @@ public interface EmploymentFindUseCase {
     @ToString
     @Builder
     class FindEmploymentResult {
+    	private String id;
     	private String recruit;
         private String company;
         private String region;
@@ -47,5 +51,9 @@ public interface EmploymentFindUseCase {
         private Boolean closed;
         private String crawlingDate;
         private String logo;
+        private String main;
+        private String require;
+        private String thanks;
+        private String fullTxt;
     }
 }
