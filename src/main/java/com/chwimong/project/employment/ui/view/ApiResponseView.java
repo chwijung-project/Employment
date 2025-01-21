@@ -21,7 +21,7 @@ public class ApiResponseView<T> {
         this.meta = meta;
     }
 
-    private ApiResponseView(T data) {
+    public ApiResponseView(T data) {
         this.data = data;
         this.meta = null;
     }
