@@ -42,3 +42,4 @@ public class CompactEmploymentController {
         return ResponseEntity.ok(responseView);
     }
 }
+
