@@ -16,11 +16,14 @@ import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/v1/employments")
+@Tag(name = "채용정보 API", description= "채용정보 검색 및 조회를 위한 메인 API")
 public class EmploymentController {
     private final EmploymentFindUseCase employmentFindUseCase;
 
@@ -30,14 +33,14 @@ public class EmploymentController {
     }
 
     @GetMapping("")
+    @Operation(summary = "채용정보 조회", description = "조건에 따른 채용정보 목록을 페이징 처리하여 조회")
     public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments(@ModelAttribute FindEmploymentRequest request) {
 
     	EmploymentFindQuery query = new EmploymentFindQuery(
 	        request.getId(),
-	        request.getJob(), 
+	        request.getJob(),
 	        request.getRegion(),
 	        request.getSort(),
-	        request.getClosed(),
 	        request.getOffset()
 	    );
     	

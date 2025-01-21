@@ -56,7 +56,6 @@ public class EmploymentService implements EmploymentFindUseCase {
             .job(entity.getJob())
             .url(entity.getUrl())
             .endDate(entity.getEndDate())
-            .closed(entity.getClosed() == null || entity.getClosed().isEmpty())
             .crawlingDate(entity.getCrawlingDate())
             .logo(entity.getLogo())
             .build();

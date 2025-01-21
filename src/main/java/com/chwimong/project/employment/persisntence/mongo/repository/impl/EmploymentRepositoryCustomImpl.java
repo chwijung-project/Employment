@@ -1,6 +1,5 @@
 package com.chwimong.project.employment.persisntence.mongo.repository.impl;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -8,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
 import com.chwimong.project.employment.persisntence.mongo.repository.EmploymentRepositoryCustom;
@@ -35,15 +33,6 @@ public class EmploymentRepositoryCustomImpl implements EmploymentRepositoryCusto
 
     private Criteria createSearchCriteria(EmploymentFindQuery query) {
         Criteria criteria = new Criteria();
-        
-        if (query.getClosed() != null) {
-            if (query.getClosed()) {
-                criteria = new Criteria().orOperator(
-                    Criteria.where("closed").is(""),
-                    Criteria.where("closed").is(null)
-                );
-            } 
-        }
         
         // 추가될 파라미터만 명시
         

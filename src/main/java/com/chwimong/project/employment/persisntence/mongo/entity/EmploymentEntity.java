@@ -34,7 +34,6 @@ public class EmploymentEntity {
     private String startDate;
     private String endDate;
     private String canApply;
-    private String closed;
     private String crawlingDate;
     private String crawlingTxt;
     private String crawlingSite;
