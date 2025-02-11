@@ -1,9 +1,11 @@
 package com.chwimong.project.employment.ui.controller;
 
-import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentSummaryListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/v1/view/compact-employments")
+@Tag(name = "요약 채용정보 API", description= "요약 채용정보 조회를 위한 메인 API")
 @ToString
 public class CompactEmploymentController {
     private final EmploymentFindUseCase employmentFindUseCase;
@@ -26,6 +29,7 @@ public class CompactEmploymentController {
     }
 
     @GetMapping("")
+    @Operation(summary = "요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
     public ResponseEntity<ApiResponseView<EmploymentSummaryListView>> getCompactEmployments(
     		@RequestParam(value = "jobtitle", required = false) String jobtitle
     ) {
@@ -33,8 +37,9 @@ public class CompactEmploymentController {
         var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
 
         EmploymentSummaryListView summaryListView = new EmploymentSummaryListView(employmentResults);
-        ApiResponseView<EmploymentSummaryListView> responseView = ApiResponseView.of(MessageType.OK, summaryListView);
+        ApiResponseView<EmploymentSummaryListView> responseView = new ApiResponseView<>(summaryListView);
 
         return ResponseEntity.ok(responseView);
     }
 }
+

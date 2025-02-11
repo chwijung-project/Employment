@@ -33,7 +33,6 @@ public interface EmploymentFindUseCase {
     	String job;
     	String region;
     	String sort;
-    	Boolean closed;
     	String offset;
     }
 
