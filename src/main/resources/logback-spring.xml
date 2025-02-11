@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
+
+   <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+   <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+   <root level="INFO">
+       <appender-ref ref="CONSOLE"/>
+   </root>
+
    <springProfile name="prod">
        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%X{requestId}] %-5level - %msg %n"/>
        <property name="LOG_REGION" value="ap-northeast-2"/>
