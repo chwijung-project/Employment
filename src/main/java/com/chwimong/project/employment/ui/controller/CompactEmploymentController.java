@@ -1,5 +1,14 @@
 package com.chwimong.project.employment.ui.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentSummaryListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
@@ -8,12 +17,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -33,13 +36,22 @@ public class CompactEmploymentController {
     public ResponseEntity<ApiResponseView<EmploymentSummaryListView>> getCompactEmployments(
     		@RequestParam(value = "jobtitle", required = false) String jobtitle
     ) {
-        var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(jobtitle);
-        var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
-
-        EmploymentSummaryListView summaryListView = new EmploymentSummaryListView(employmentResults);
-        ApiResponseView<EmploymentSummaryListView> responseView = new ApiResponseView<>(summaryListView);
-
-        return ResponseEntity.ok(responseView);
+    	
+    	try {
+    		log.info("[CompactEmploymentController] getCompactEmployments 요약 채용정보 조회 요청 - jobtitle: {}", jobtitle);
+    		
+    		var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(jobtitle);
+    		var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
+    		
+    		EmploymentSummaryListView summaryListView = new EmploymentSummaryListView(employmentResults);
+    		ApiResponseView<EmploymentSummaryListView> responseView = new ApiResponseView<>(summaryListView);
+    		
+    		return ResponseEntity.ok(responseView);
+    		
+    	} catch(Exception e) {
+    		log.error("[CompactEmploymentController] getCompactEmployments 요약 채용정보 조회 실패 - jobtitle: {}", jobtitle, e.getMessage());
+    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     }
 }
 
