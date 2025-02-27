@@ -12,6 +12,7 @@ import com.chwimong.project.employment.ui.common.Criteria;
 import com.chwimong.project.employment.ui.common.Page;
 import com.chwimong.project.employment.ui.request.FindEmploymentRequest;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
+import com.chwimong.project.employment.ui.view.EmploymentCountListView;
 import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
@@ -50,6 +51,17 @@ public class EmploymentController {
         
         EmploymentListView employmentListView = new EmploymentListView(resultPage.getContent());
         ApiResponseView<EmploymentListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView, pageInfo);
+        
+        return ResponseEntity.ok(responseView);
+    }
+
+    @GetMapping("/dashboard")
+    @Operation(summary = "직무별, 주차별 누적 채용공고 개수 조회", description = "직무별로 주차에 따른 누적 채용공고 개수 조회")
+    public ResponseEntity<ApiResponseView<EmploymentCountListView>> getWeeklyEmploymentCountByJob() {
+
+    	var result = employmentFindUseCase.getEmploymentCountResults();
+        EmploymentCountListView employmentListView = new EmploymentCountListView(result.stream().toList());
+        ApiResponseView<EmploymentCountListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
         
         return ResponseEntity.ok(responseView);
     }

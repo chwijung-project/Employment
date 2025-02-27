@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 public interface EmploymentFindUseCase {
 
     Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
+    List<FindEmploymentCountResult> getEmploymentCountResults();
 
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
@@ -35,6 +37,45 @@ public interface EmploymentFindUseCase {
     	String sort;
     	String offset;
     }
+
+    @AllArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @Getter
+    class EmploymentCountQuery {
+        String sort;
+    	String offset;     
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    class EmploymentGroupedQuery {
+        private String crawlingDate;
+        private int month;
+        private String filteredJobtitle;
+        private long count;
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    class FindEmploymentCountResult {
+        private String crawlingDate;  
+        private int month;  
+        private List<JobData> jobs;  
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    class JobData {
+        private String filteredJobtitle; 
+        private Long count;  
+    }
+
 
     @Getter
     @ToString

@@ -1,5 +1,8 @@
 package com.chwimong.project.employment.service.impl;
 
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,6 +50,25 @@ public class EmploymentService implements EmploymentFindUseCase {
 	        .map(this::convertToCategoryResult)
 	        .collect(Collectors.toList());
     }
+
+    @Override
+    public List<FindEmploymentCountResult> getEmploymentCountResults() {
+
+        List<EmploymentGroupedQuery> rawData = employmentEntityRepository.findGroupedEmploymentData();
+        Map<String, FindEmploymentCountResult> groupedMap = new LinkedHashMap<>();
+
+        for (EmploymentGroupedQuery data : rawData) {
+            groupedMap.computeIfAbsent(data.getCrawlingDate(), date -> 
+                FindEmploymentCountResult.builder()
+                    .crawlingDate(date)
+                    .month(data.getMonth())
+                    .jobs(new ArrayList<>()) 
+                    .build()
+            ).getJobs().add(new JobData(data.getFilteredJobtitle(), data.getCount()));
+        }
+        
+        return new ArrayList<>(groupedMap.values());
+    }    
 
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
