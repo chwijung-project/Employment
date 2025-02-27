@@ -70,7 +70,6 @@ public interface EmploymentFindUseCase {
     @ToString
     @Builder
     @AllArgsConstructor
-    @NoArgsConstructor
     class JobData {
         private String filteredJobtitle; 
         private Long count;  
