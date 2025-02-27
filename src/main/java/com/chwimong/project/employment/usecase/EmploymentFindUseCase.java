@@ -38,14 +38,6 @@ public interface EmploymentFindUseCase {
     	String offset;
     }
 
-    @AllArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @Getter
-    class EmploymentCountQuery {
-        String sort;
-    	String offset;     
-    }
-
     @Getter
     @AllArgsConstructor
     @Builder
