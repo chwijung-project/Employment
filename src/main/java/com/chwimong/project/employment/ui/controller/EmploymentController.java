@@ -56,7 +56,7 @@ public class EmploymentController {
     }
 
     @GetMapping("/dashboard")
-    @Operation(summary = "직무별, 주차별 누적 채용공고 개수 조회", description = "직무별로 주차에 따른 누적 채용공고 개수 조회")
+    @Operation(summary = "직무별, 크롤링 주차별 채용공고 개수 조회", description = "직무별로 크롤링 주차에 따른 채용공고 개수 조회")
     public ResponseEntity<ApiResponseView<EmploymentCountListView>> getWeeklyEmploymentCountByJob() {
 
     	var result = employmentFindUseCase.getEmploymentCountResults();
