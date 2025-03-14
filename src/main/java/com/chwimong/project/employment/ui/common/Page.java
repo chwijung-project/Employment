@@ -13,6 +13,7 @@ public class Page {
     private int pageEnd;
     private boolean next, prev;
     private int total;
+    private String searchValue;
     private Criteria cri;
 
     

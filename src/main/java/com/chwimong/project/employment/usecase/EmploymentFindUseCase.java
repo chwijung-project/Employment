@@ -34,6 +34,7 @@ public interface EmploymentFindUseCase {
     	String region;
     	String sort;
     	String offset;
+    	String searchValue;
     }
 
     @Getter
