@@ -48,7 +48,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     @Override
     public List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query) {
     	try {
-    		List<EmploymentEntity> entities = employmentEntityRepository.findByJobtitleFilterEquals(query.getJobtitle());
+    		List<EmploymentEntity> entities = employmentEntityRepository.findByFilteredJobtitleEquals(query.getJobtitle());
     		
     		return entities.stream()
     				.map(this::convertToCategoryResult)
