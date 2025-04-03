@@ -79,9 +79,9 @@ public class EmploymentService implements EmploymentFindUseCase {
 
         if ("steady".equals(filter)) {
             rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
-        } else if ("hot".equals(filter)) {
-            Date sixMonthsAgo = Date.from(LocalDate.now().minusMonths(6).atStartOfDay(ZoneId.systemDefault()).toInstant());
-            rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(sixMonthsAgo);
+        } else if ("new".equals(filter)) {
+            Date threeMonthsAgo = Date.from(LocalDate.now().minusMonths(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(threeMonthsAgo);
         }
         return rawData.stream().map(this::convertToKeywordTrendResult).collect(Collectors.toList());
         

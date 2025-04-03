@@ -41,7 +41,7 @@ public interface EmploymentEntityRepository extends MongoRepository<EmploymentEn
         "{ $limit: 10 }",
         "{ $project: { _id: 0, keyword: '$_id', count: 1 } }"
     })
-    List<EmploymentKeywordTrendQuery> findEmploymentHotKeywordTrend(Date sixMonthsAgo);
+    List<EmploymentKeywordTrendQuery> findEmploymentHotKeywordTrend(Date threeMonthsAgo);
 
     @Aggregation(pipeline = {
         "{ $match: { keyword: { $exists: true, $ne: [] } } }",
