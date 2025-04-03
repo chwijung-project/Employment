@@ -59,6 +59,20 @@ public class EmploymentService implements EmploymentFindUseCase {
     	}
     }
 
+    @Override
+	public List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query) {
+    	try {
+    		List<EmploymentEntity> entities = employmentEntityRepository.findByKeywordEquals(query.getKeyword());
+    		
+    		return entities.stream()
+    				.map(this::convertToKeywordResult)
+    				.collect(Collectors.toList());
+    	} catch(Exception e) {
+    		log.error("[EmploymentService] getEmploymentsWithKeyword");
+    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
+	}
+    
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
             .recruit(entity.getRecruit())
@@ -81,4 +95,12 @@ public class EmploymentService implements EmploymentFindUseCase {
             .fullTxt(entity.getFullTxt())
             .build();
     }
+    
+    private FindEmploymentResult convertToKeywordResult(EmploymentEntity entity) {
+    	return FindEmploymentResult.builder()
+    		.id(entity.getId())
+    		.thanks(entity.getThanks())
+    		.build();
+    }
+
 }

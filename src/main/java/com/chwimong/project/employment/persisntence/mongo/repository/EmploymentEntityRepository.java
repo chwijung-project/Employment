@@ -12,4 +12,6 @@ public interface EmploymentEntityRepository extends MongoRepository<EmploymentEn
 
 	List<EmploymentEntity> findByFilteredJobtitleEquals(String string);
 
+	List<EmploymentEntity> findByKeywordEquals(String keyword);
+
 }

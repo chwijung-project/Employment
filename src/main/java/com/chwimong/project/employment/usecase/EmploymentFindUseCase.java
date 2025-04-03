@@ -16,12 +16,20 @@ public interface EmploymentFindUseCase {
 
     Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
-
+    List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query);
+    
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
     class EmploymentWithCategoryQuery {
         String jobtitle;
+    }
+    
+    @AllArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @Getter
+    class EmploymentWithKeywordQuery {
+        String keyword;
     }
 
     @AllArgsConstructor
@@ -55,5 +63,6 @@ public interface EmploymentFindUseCase {
         private String require;
         private String thanks;
         private String fullTxt;
+        private String keyword;
     }
 }
