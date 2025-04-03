@@ -84,7 +84,7 @@ public class EmploymentController {
 
 
     @GetMapping("/keyword-map")
-    @Operation(summary = "직무별 키워드 맵", description = "직무별 키워드의 빈도 추이를 알기 위해 키워드 맵을 조회")
+    @Operation(summary = "직무별 키워드 맵", description = "직무별 키워드의 리스트 조회")
     public ResponseEntity<ApiResponseView<EmploymentKeywordMapListByJobtitleView>> getKeywordMapByJobtitle() {
 
         var result = employmentFindUseCase.getEmploymentKeywordMapByJobtitleResults();
