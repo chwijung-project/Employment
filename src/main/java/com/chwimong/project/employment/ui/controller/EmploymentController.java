@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.common.Criteria;
@@ -13,6 +14,7 @@ import com.chwimong.project.employment.ui.common.Page;
 import com.chwimong.project.employment.ui.request.FindEmploymentRequest;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentCountListView;
+import com.chwimong.project.employment.ui.view.EmploymentKeywordTrendListView;
 import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
@@ -65,5 +67,19 @@ public class EmploymentController {
         
         return ResponseEntity.ok(responseView);
     }
+
+    @GetMapping("/keyword-trend")
+    @Operation(summary = "hot, steady 트렌드 키워드", description = "키워드의 빈도 추이를 알기 위해 hot, steady 키워드를 조회")
+    public ResponseEntity<ApiResponseView<EmploymentKeywordTrendListView>> getKeywordTrend(
+            @RequestParam(name = "filter", required = true) String filter) {
+
+        var result = employmentFindUseCase.getEmploymentKeywordTrendResults(filter);
+
+        EmploymentKeywordTrendListView employmentListView = new EmploymentKeywordTrendListView(result);
+        ApiResponseView<EmploymentKeywordTrendListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
+
+        return ResponseEntity.ok(responseView);
+    }
+    
     
 }

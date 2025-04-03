@@ -18,6 +18,7 @@ public interface EmploymentFindUseCase {
     Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
     List<FindEmploymentCountResult> getEmploymentCountResults();
+    List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter);
 
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
@@ -86,5 +87,22 @@ public interface EmploymentFindUseCase {
         private String require;
         private String thanks;
         private String fullTxt;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    class EmploymentKeywordTrendQuery {
+        private String keyword;
+        private long count;
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    class FindEmploymentKeywordTrendResult{
+        private String keyword;
+        private Long count;
     }
 }

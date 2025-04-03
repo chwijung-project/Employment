@@ -1,6 +1,9 @@
 package com.chwimong.project.employment.service.impl;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -68,7 +71,21 @@ public class EmploymentService implements EmploymentFindUseCase {
         }
         
         return new ArrayList<>(groupedMap.values());
-    }    
+    } 
+    
+    @Override
+    public List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter) {
+        List<EmploymentKeywordTrendQuery> rawData = null;
+
+        if ("steady".equals(filter)) {
+            rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
+        } else if ("hot".equals(filter)) {
+            Date sixMonthsAgo = Date.from(LocalDate.now().minusMonths(6).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(sixMonthsAgo);
+        }
+        return rawData.stream().map(this::convertToKeywordTrendResult).collect(Collectors.toList());
+        
+    }
 
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
@@ -83,6 +100,13 @@ public class EmploymentService implements EmploymentFindUseCase {
             .build();
     }
     
+    private FindEmploymentKeywordTrendResult convertToKeywordTrendResult(EmploymentKeywordTrendQuery query) {
+        return FindEmploymentKeywordTrendResult.builder()
+            .keyword(query.getKeyword())
+            .count(query.getCount())
+            .build();
+    }
+
     private FindEmploymentResult convertToCategoryResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
             .id(entity.getId())
