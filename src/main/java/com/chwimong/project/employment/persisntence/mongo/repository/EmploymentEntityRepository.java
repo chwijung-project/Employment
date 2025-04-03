@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
+import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentKeywordMapQuery;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentGroupedQuery;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentKeywordTrendQuery;
 
@@ -41,6 +42,18 @@ public interface EmploymentEntityRepository extends MongoRepository<EmploymentEn
         "{ $project: { _id: 0, keyword: '$_id', count: 1 } }"
     })
     List<EmploymentKeywordTrendQuery> findEmploymentHotKeywordTrend(Date sixMonthsAgo);
+
+    @Aggregation(pipeline = {
+        "{ $match: { keyword: { $exists: true, $ne: [] } } }",
+        "{ $unwind: '$keyword' }",
+        "{ $group: { _id: '$filteredJobtitle', keywords: { $addToSet: '$keyword' } } }",
+        "{ $project: { " +
+            "_id: 0, " +
+            "jobtitle: '$_id', " +
+            "keywords: { $sortArray: { input: '$keywords', sortBy: 1 } } " +
+        "} }"
+    })
+    List<EmploymentKeywordMapQuery> findEmploymentKeywordMapByJobtitle();
 
 
 

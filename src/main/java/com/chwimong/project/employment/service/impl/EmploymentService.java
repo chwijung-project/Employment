@@ -87,6 +87,12 @@ public class EmploymentService implements EmploymentFindUseCase {
         
     }
 
+    @Override
+    public List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults() {
+        List<EmploymentKeywordMapQuery> rawData = employmentEntityRepository.findEmploymentKeywordMapByJobtitle();
+        return rawData.stream().map(this::convertToKeywordResult).collect(Collectors.toList());
+    }
+
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
             .recruit(entity.getRecruit())
@@ -116,4 +122,11 @@ public class EmploymentService implements EmploymentFindUseCase {
             .fullTxt(entity.getFullTxt())
             .build();
     }
+
+    private FindEmploymentKeywordMapResult convertToKeywordResult(EmploymentKeywordMapQuery query) {
+        return FindEmploymentKeywordMapResult.builder()
+            .jobtitle(query.getJobtitle())
+            .keywords(query.getKeywords())
+            .build();
+    }   
 }
