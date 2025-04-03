@@ -41,4 +41,5 @@ public class EmploymentEntity {
     @Field("filteredJobtitle")
     private String filteredJobtitle;
     private String fullTxt;
+    private String keyword;
 }
