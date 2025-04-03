@@ -73,7 +73,18 @@ public class EmploymentController {
     @Operation(summary = "hot, steady 트렌드 키워드", description = "키워드의 빈도 추이를 알기 위해 hot, steady 키워드를 조회")
     public ResponseEntity<ApiResponseView<EmploymentKeywordTrendListView>> getKeywordTrend(
             @RequestParam(name = "filter", required = true) String filter) {
-
+        
+                if (!"steady".equalsIgnoreCase(filter) && !"new".equalsIgnoreCase(filter)) {
+                    return ResponseEntity.badRequest().body(
+                                                            ApiResponseView.of(
+                                                                MessageType.BAD_REQUEST,
+                                                                null,
+                                                                null,
+                                                                "유효하지 않은 filter 값입니다. 'steady' 또는 'new'만 허용됩니다."
+                                                            )
+                                                        );
+                }
+    
         var result = employmentFindUseCase.getEmploymentKeywordTrendResults(filter);
 
         EmploymentKeywordTrendListView employmentListView = new EmploymentKeywordTrendListView(result);
