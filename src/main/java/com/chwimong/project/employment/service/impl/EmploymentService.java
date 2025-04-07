@@ -100,6 +100,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     	return FindEmploymentResult.builder()
     		.id(entity.getId())
     		.thanks(entity.getThanks())
+    		.require(entity.getRequire())
     		.build();
     }
 

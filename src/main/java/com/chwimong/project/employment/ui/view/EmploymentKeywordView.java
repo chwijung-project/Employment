@@ -13,9 +13,11 @@ public class EmploymentKeywordView {
 
 	private String id;
 	private String thanks;
+	private String require;
 	
 	public EmploymentKeywordView(EmploymentFindUseCase.FindEmploymentResult result) {
 		this.id = result.getId();
 		this.thanks = result.getThanks();
+		this.require = result.getRequire();
 	}
 }
