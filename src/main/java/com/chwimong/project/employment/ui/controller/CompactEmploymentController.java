@@ -39,8 +39,6 @@ public class CompactEmploymentController {
     ) {
     	
     	try {
-    		log.info("[CompactEmploymentController] getCompactEmploymentsForFiltering 직무명 필터링용 요약 채용정보 조회 요청 - jobtitle: {}", jobtitle);
-    		
     		var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(jobtitle);
     		var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
     		
@@ -50,7 +48,7 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 - jobtitle: {}", jobtitle, e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 - jobtitle: {}", e.getMessage());
     		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
@@ -58,13 +56,11 @@ public class CompactEmploymentController {
     @GetMapping("/keyword")
     @Operation(summary = "키워드 추출용 요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
     public ResponseEntity<ApiResponseView<EmploymentKeywordListView>> getCompactEmploymentsForKeyword(
-    		@RequestParam(value = "thanks", required = false) String thanks
+    		@RequestParam(value = "keyword", required = false) String keyword
 	) {
     	
     	try {
-    		log.info("[CompactEmploymentController] getCompactEmploymentsForKeyword 키워드 추출용 요약 채용정보 조회 요청 - keyword: {}", thanks);
-    		
-    		var query = new EmploymentFindUseCase.EmploymentWithKeywordQuery(thanks);
+    		var query = new EmploymentFindUseCase.EmploymentWithKeywordQuery(keyword);
     		var employmentResults = employmentFindUseCase.getEmploymentsWithKeyword(query);
     		
     		EmploymentKeywordListView keywordListView = new EmploymentKeywordListView(employmentResults);
@@ -73,7 +69,7 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 - keyword: {}", thanks, e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 - keyword: {}", e.getMessage());
     		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
