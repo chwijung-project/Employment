@@ -2,7 +2,7 @@ name: EC2 Image Build on Employment_feature
 
 on:
   push:
-    branches: [ feature/employment ]
+    branches: [ develop ]
 
 jobs:
   docker:
