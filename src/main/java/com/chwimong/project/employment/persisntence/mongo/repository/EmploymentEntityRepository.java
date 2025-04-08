@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmploymentEntityRepository extends MongoRepository<EmploymentEntity, String>, EmploymentRepositoryCustom {
 
-	List<EmploymentEntity> findByJobtitleFilterEquals(String string);
+	List<EmploymentEntity> findByFilteredJobtitleEquals(String string);
+
+	List<EmploymentEntity> findByKeywordEquals(String keyword);
 
 }
