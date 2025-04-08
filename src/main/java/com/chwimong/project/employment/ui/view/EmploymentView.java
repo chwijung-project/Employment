@@ -3,7 +3,6 @@ package com.chwimong.project.employment.ui.view;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter

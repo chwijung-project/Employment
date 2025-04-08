@@ -1,5 +1,11 @@
 package com.chwimong.project.employment.service.impl;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +66,44 @@ public class EmploymentService implements EmploymentFindUseCase {
     }
 
     @Override
+    public List<FindEmploymentCountResult> getEmploymentCountResults() {
+
+        List<EmploymentGroupedQuery> rawData = employmentEntityRepository.findGroupedEmploymentData();
+        Map<String, FindEmploymentCountResult> groupedMap = new LinkedHashMap<>();
+
+        for (EmploymentGroupedQuery data : rawData) {
+            groupedMap.computeIfAbsent(data.getCrawlingDate(), date -> 
+                FindEmploymentCountResult.builder()
+                    .crawlingDate(date)
+                    .month(data.getMonth())
+                    .jobs(new ArrayList<>()) 
+                    .build()
+            ).getJobs().add(new JobData(data.getFilteredJobtitle(), data.getCount()));
+        }
+        
+        return new ArrayList<>(groupedMap.values());
+    } 
+    
+    @Override
+    public List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter) {
+        List<EmploymentKeywordTrendQuery> rawData = null;
+
+        if ("steady".equals(filter)) {
+            rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
+        } else if ("new".equals(filter)) {
+            Date threeMonthsAgo = Date.from(LocalDate.now().minusMonths(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(threeMonthsAgo);
+        }
+        return rawData.stream().map(this::convertToKeywordTrendResult).collect(Collectors.toList());
+        
+    }
+
+    @Override
+    public List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults() {
+        List<EmploymentKeywordMapQuery> rawData = employmentEntityRepository.findEmploymentKeywordMapByJobtitle();
+        return rawData.stream().map(this::convertToKeywordResult).collect(Collectors.toList());
+    }
+
 	public List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query) {
     	try {
     		List<EmploymentEntity> entities = employmentEntityRepository.findByKeywordEquals(query.getKeyword());
@@ -86,6 +130,13 @@ public class EmploymentService implements EmploymentFindUseCase {
             .build();
     }
     
+    private FindEmploymentKeywordTrendResult convertToKeywordTrendResult(EmploymentKeywordTrendQuery query) {
+        return FindEmploymentKeywordTrendResult.builder()
+            .keyword(query.getKeyword())
+            .count(query.getCount())
+            .build();
+    }
+
     private FindEmploymentResult convertToCategoryResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
             .id(entity.getId())
@@ -95,6 +146,13 @@ public class EmploymentService implements EmploymentFindUseCase {
             .fullTxt(entity.getFullTxt())
             .build();
     }
+
+    private FindEmploymentKeywordMapResult convertToKeywordResult(EmploymentKeywordMapQuery query) {
+        return FindEmploymentKeywordMapResult.builder()
+            .jobtitle(query.getJobtitle())
+            .keywords(query.getKeywords())
+            .build();
+    }   
     
     private FindEmploymentResult convertToKeywordResult(EmploymentEntity entity) {
     	return FindEmploymentResult.builder()

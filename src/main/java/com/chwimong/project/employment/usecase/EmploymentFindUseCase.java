@@ -10,12 +10,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 public interface EmploymentFindUseCase {
 
     Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
+    List<FindEmploymentCountResult> getEmploymentCountResults();
+    List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter);
+    List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults();
+
     List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query);
     
     @AllArgsConstructor
@@ -46,6 +51,36 @@ public interface EmploymentFindUseCase {
     }
 
     @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    class EmploymentGroupedQuery {
+        private String crawlingDate;
+        private int month;
+        private String filteredJobtitle;
+        private long count;
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    class FindEmploymentCountResult {
+        private String crawlingDate;  
+        private int month;  
+        private List<JobData> jobs;  
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    @AllArgsConstructor
+    class JobData {
+        private String filteredJobtitle; 
+        private Long count;  
+    }
+
+
+    @Getter
     @ToString
     @Builder
     class FindEmploymentResult {
@@ -64,5 +99,39 @@ public interface EmploymentFindUseCase {
         private String thanks;
         private String fullTxt;
         private String keyword;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    class EmploymentKeywordTrendQuery {
+        private String keyword;
+        private long count;
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    class FindEmploymentKeywordTrendResult{
+        private String keyword;
+        private Long count;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @Builder
+    @ToString
+    class EmploymentKeywordMapQuery {
+        private String jobtitle;
+        private List<String> keywords;
+    }
+
+    @Getter
+    @ToString
+    @Builder
+    class FindEmploymentKeywordMapResult{
+        private String jobtitle;
+        private List<String> keywords;
     }
 }

@@ -40,6 +40,13 @@ public class ApiResponseView<T> {
         );
     }
 
+    public static <T> ApiResponseView<T> of(MessageType messageType, T data, Page pageInfo, String customMessage) {
+        return new ApiResponseView<>(
+            data,
+            new MetaData(messageType, pageInfo, customMessage)
+        );
+    }
+    
     @Getter
     private static class MetaData {
         private final int status;
@@ -50,6 +57,12 @@ public class ApiResponseView<T> {
         private MetaData(MessageType messageType, Page pageInfo) {
             this.status = messageType.getStatus().value();
             this.message = messageType.getMessage();
+            this.pageInfo = pageInfo;
+        }
+
+        private MetaData(MessageType messageType, Page pageInfo, String customMessage) {
+            this.status = messageType.getStatus().value();
+            this.message = customMessage; 
             this.pageInfo = pageInfo;
         }
     }
