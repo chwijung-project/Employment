@@ -15,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
 import com.chwimong.project.employment.persisntence.mongo.repository.EmploymentEntityRepository;
 import com.chwimong.project.employment.ui.common.Criteria;
@@ -34,24 +36,33 @@ public class EmploymentService implements EmploymentFindUseCase {
 
     @Override
     public Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query) {
-
-    	int index = cri.getPageNum() -1;
-		int count = cri.getAmount();
-
-		Pageable paging = PageRequest.of(index, count);
-		Page<EmploymentEntity> employmentEntities = employmentEntityRepository.getEmployments(paging, query);
-
-		return employmentEntities.map(this::convertToFindEmploymentsResult);
+    	try {
+	    	int index = cri.getPageNum() -1;
+			int count = cri.getAmount();
+	
+			Pageable paging = PageRequest.of(index, count);
+			Page<EmploymentEntity> employmentEntities = employmentEntityRepository.getEmployments(paging, query);
+			
+			return employmentEntities.map(this::convertToFindEmploymentsResult);
+			
+    	} catch (Exception e) {
+            log.error("[EmploymentService] 채용정보 조회 실패 - cri: {}, query: {}, error: {}", cri, query, e.getMessage(), e);
+            throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
     public List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query) {
-
-    	List<EmploymentEntity> entities = employmentEntityRepository.findByJobtitleFilterEquals(query.getJobtitle());
-
-    	return entities.stream()
-	        .map(this::convertToCategoryResult)
-	        .collect(Collectors.toList());
+    	try {
+    		List<EmploymentEntity> entities = employmentEntityRepository.findByFilteredJobtitleEquals(query.getJobtitle());
+    		
+    		return entities.stream()
+    				.map(this::convertToCategoryResult)
+    				.collect(Collectors.toList());
+    	} catch(Exception e) {
+    		log.error("[EmploymentService] getEmploymentsWithCategory");
+    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     }
 
     @Override
@@ -93,6 +104,19 @@ public class EmploymentService implements EmploymentFindUseCase {
         return rawData.stream().map(this::convertToKeywordResult).collect(Collectors.toList());
     }
 
+	public List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query) {
+    	try {
+    		List<EmploymentEntity> entities = employmentEntityRepository.findByKeywordEquals(query.getKeyword());
+    		
+    		return entities.stream()
+    				.map(this::convertToKeywordResult)
+    				.collect(Collectors.toList());
+    	} catch(Exception e) {
+    		log.error("[EmploymentService] getEmploymentsWithKeyword");
+    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
+	}
+    
     private FindEmploymentResult convertToFindEmploymentsResult(EmploymentEntity entity) {
         return FindEmploymentResult.builder()
             .recruit(entity.getRecruit())
@@ -129,4 +153,13 @@ public class EmploymentService implements EmploymentFindUseCase {
             .keywords(query.getKeywords())
             .build();
     }   
+    
+    private FindEmploymentResult convertToKeywordResult(EmploymentEntity entity) {
+    	return FindEmploymentResult.builder()
+    		.id(entity.getId())
+    		.thanks(entity.getThanks())
+    		.require(entity.getRequire())
+    		.build();
+    }
+
 }

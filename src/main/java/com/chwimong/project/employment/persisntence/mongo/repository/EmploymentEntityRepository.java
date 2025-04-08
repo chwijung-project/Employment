@@ -15,7 +15,9 @@ import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentK
 @Repository
 public interface EmploymentEntityRepository extends MongoRepository<EmploymentEntity, String>, EmploymentRepositoryCustom {
 
-	List<EmploymentEntity> findByJobtitleFilterEquals(String string);
+	List<EmploymentEntity> findByFilteredJobtitleEquals(String string);
+
+	List<EmploymentEntity> findByKeywordEquals(String keyword);
 
 	@Aggregation(pipeline = {
         "{ $group: { _id: { crawlingDate: '$crawlingDate', filteredJobtitle: '$filteredJobtitle' }, count: { $sum: 1 } } }",

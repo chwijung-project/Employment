@@ -38,7 +38,8 @@ public class EmploymentEntity {
     private String crawlingTxt;
     private String crawlingSite;
     private String logo;
-    @Field("jobtitle_filter")
-    private String jobtitleFilter;
+    @Field("filteredJobtitle")
+    private String filteredJobtitle;
     private String fullTxt;
+    private String keyword;
 }

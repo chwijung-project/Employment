@@ -11,7 +11,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
 import com.chwimong.project.employment.persisntence.mongo.repository.EmploymentRepositoryCustom;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
+import com.mongodb.MongoException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class EmploymentRepositoryCustomImpl implements EmploymentRepositoryCustom {
 
     private final MongoTemplate mongoTemplate;
@@ -22,13 +26,19 @@ public class EmploymentRepositoryCustomImpl implements EmploymentRepositoryCusto
 
     @Override
     public Page<EmploymentEntity> getEmployments(Pageable pageable, EmploymentFindQuery query) {
-        final Query mongoQuery = Query.query(createSearchCriteria(query)).with(pageable);
-        
-        return new PageImpl<>(
-            mongoTemplate.find(mongoQuery, EmploymentEntity.class),
-            pageable,
-            mongoTemplate.count(mongoQuery.skip(-1).limit(-1), EmploymentEntity.class)
-        );
+    	
+    	try {
+	        final Query mongoQuery = Query.query(createSearchCriteria(query)).with(pageable);
+	        
+	        return new PageImpl<>(
+	            mongoTemplate.find(mongoQuery, EmploymentEntity.class),
+	            pageable,
+	            mongoTemplate.count(mongoQuery.skip(-1).limit(-1), EmploymentEntity.class)
+	        );
+    	} catch(MongoException e) {
+    		log.error("[EmploymentRepositoryCustomImpl] getEmployments MongoDB 채용정보 조회 실패 - error: {}", e.getMessage(), e);
+            throw e;
+    	}
     }
 
     private Criteria createSearchCriteria(EmploymentFindQuery query) {

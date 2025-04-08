@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 @ToString
 public class ChwimongException extends RuntimeException{
-    private final HttpStatus status;
+	private static final long serialVersionUID = 4830719456759247700L;
+	
+	private final HttpStatus status;
     private final String type;
 
     public ChwimongException(MessageType message) {

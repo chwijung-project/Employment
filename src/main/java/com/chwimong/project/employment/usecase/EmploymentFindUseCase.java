@@ -21,11 +21,20 @@ public interface EmploymentFindUseCase {
     List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter);
     List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults();
 
+    List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query);
+    
     @AllArgsConstructor
     @EqualsAndHashCode(callSuper = false)
     @Getter
     class EmploymentWithCategoryQuery {
         String jobtitle;
+    }
+    
+    @AllArgsConstructor
+    @EqualsAndHashCode(callSuper = false)
+    @Getter
+    class EmploymentWithKeywordQuery {
+        String keyword;
     }
 
     @AllArgsConstructor
@@ -38,6 +47,7 @@ public interface EmploymentFindUseCase {
     	String region;
     	String sort;
     	String offset;
+    	String searchValue;
     }
 
     @Getter
@@ -88,6 +98,7 @@ public interface EmploymentFindUseCase {
         private String require;
         private String thanks;
         private String fullTxt;
+        private String keyword;
     }
 
     @Getter
