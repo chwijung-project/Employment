@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chwimong.project.employment.exception.ChwimongException;
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
-import com.chwimong.project.employment.ui.view.EmploymentKeywordListView;
-import com.chwimong.project.employment.ui.view.EmploymentSummaryListView;
+import com.chwimong.project.employment.ui.view.filterSystem.EmploymentJobFilteringListView;
+import com.chwimong.project.employment.ui.view.filterSystem.EmploymentKeywordExtractionListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +34,7 @@ public class CompactEmploymentController {
 
     @GetMapping("")
     @Operation(summary = "직무명 필터링용 요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
-    public ResponseEntity<ApiResponseView<EmploymentSummaryListView>> getCompactEmploymentsForFiltering(
+    public ResponseEntity<ApiResponseView<EmploymentJobFilteringListView>> getCompactEmploymentsForFiltering(
     		@RequestParam(value = "jobtitle", required = false) String jobtitle
     ) {
     	
@@ -42,8 +42,8 @@ public class CompactEmploymentController {
     		var query = new EmploymentFindUseCase.EmploymentWithCategoryQuery(jobtitle);
     		var employmentResults = employmentFindUseCase.getEmploymentsWithCategory(query);
     		
-    		EmploymentSummaryListView summaryListView = new EmploymentSummaryListView(employmentResults);
-    		ApiResponseView<EmploymentSummaryListView> responseView = new ApiResponseView<>(summaryListView);
+    		EmploymentJobFilteringListView summaryListView = new EmploymentJobFilteringListView(employmentResults);
+    		ApiResponseView<EmploymentJobFilteringListView> responseView = new ApiResponseView<>(summaryListView);
     		
     		return ResponseEntity.ok(responseView);
     		
@@ -55,7 +55,7 @@ public class CompactEmploymentController {
     
     @GetMapping("/keyword")
     @Operation(summary = "키워드 추출용 요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
-    public ResponseEntity<ApiResponseView<EmploymentKeywordListView>> getCompactEmploymentsForKeyword(
+    public ResponseEntity<ApiResponseView<EmploymentKeywordExtractionListView>> getCompactEmploymentsForKeyword(
     		@RequestParam(value = "keyword", required = false) String keyword
 	) {
     	
@@ -63,8 +63,8 @@ public class CompactEmploymentController {
     		var query = new EmploymentFindUseCase.EmploymentWithKeywordQuery(keyword);
     		var employmentResults = employmentFindUseCase.getEmploymentsWithKeyword(query);
     		
-    		EmploymentKeywordListView keywordListView = new EmploymentKeywordListView(employmentResults);
-    		ApiResponseView<EmploymentKeywordListView> responseView = new ApiResponseView<>(keywordListView);
+    		EmploymentKeywordExtractionListView keywordListView = new EmploymentKeywordExtractionListView(employmentResults);
+    		ApiResponseView<EmploymentKeywordExtractionListView> responseView = new ApiResponseView<>(keywordListView);
     		
     		return ResponseEntity.ok(responseView);
     		

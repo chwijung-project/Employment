@@ -1,4 +1,4 @@
-package com.chwimong.project.employment.ui.view;
+package com.chwimong.project.employment.ui.view.filterSystem;
 
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EmploymentSummaryView {
+public class EmploymentJobFilteringView {
 	
     private String id;
     private String main;
@@ -16,7 +16,7 @@ public class EmploymentSummaryView {
     private String thanks;
     private String fullTxt;
 
-    public EmploymentSummaryView(EmploymentFindUseCase.FindEmploymentResult result) {
+    public EmploymentJobFilteringView(EmploymentFindUseCase.FindEmploymentResult result) {
         this.id = result.getId();
         this.main = result.getMain();
         this.require = result.getRequire();

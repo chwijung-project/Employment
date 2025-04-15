@@ -1,4 +1,4 @@
-package com.chwimong.project.employment.ui.view;
+package com.chwimong.project.employment.ui.view.filterSystem;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,14 +11,14 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class EmploymentSummaryListView {
+public class EmploymentJobFilteringListView {
 	
 	@JsonValue
-    private List<EmploymentSummaryView> summaryViewList;
+    private List<EmploymentJobFilteringView> summaryViewList;
 
-    public EmploymentSummaryListView(List<FindEmploymentResult> results) {
+    public EmploymentJobFilteringListView(List<FindEmploymentResult> results) {
         this.summaryViewList = results.stream()
-            .map(EmploymentSummaryView::new)
+            .map(EmploymentJobFilteringView::new)
             .collect(Collectors.toList());
     }
 }
