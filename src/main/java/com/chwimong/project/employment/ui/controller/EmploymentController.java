@@ -16,8 +16,8 @@ import com.chwimong.project.employment.ui.request.FindEmploymentRequest;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentCountListView;
 import com.chwimong.project.employment.ui.view.EmploymentKeywordTrendListView;
+import com.chwimong.project.employment.ui.view.client.EmploymentListView;
 import com.chwimong.project.employment.ui.view.EmploymentKeywordMapListByJobtitleView;
-import com.chwimong.project.employment.ui.view.EmploymentListView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
 
