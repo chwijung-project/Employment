@@ -17,7 +17,6 @@ import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.EmploymentCountListView;
 import com.chwimong.project.employment.ui.view.EmploymentKeywordTrendListView;
 import com.chwimong.project.employment.ui.view.client.EmploymentListView;
-import com.chwimong.project.employment.ui.view.EmploymentKeywordMapListByJobtitleView;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentFindQuery;
 
@@ -83,7 +82,7 @@ public class EmploymentController {
     }
 
     @GetMapping("/keyword-trend")
-    @Operation(summary = "hot, steady 트렌드 키워드", description = "키워드의 빈도 추이를 알기 위해 hot, steady 키워드를 조회")
+    @Operation(summary = "steady, new 트렌드 키워드", description = "키워드의 빈도 추이를 알기 위해 steady, new 키워드를 조회")
     public ResponseEntity<ApiResponseView<EmploymentKeywordTrendListView>> getKeywordTrend(
             @RequestParam(name = "filter", required = true) String filter) {
         
@@ -106,17 +105,5 @@ public class EmploymentController {
         return ResponseEntity.ok(responseView);
     }
 
-
-    @GetMapping("/keyword-map")
-    @Operation(summary = "직무별 키워드 맵", description = "직무별 키워드의 리스트 조회")
-    public ResponseEntity<ApiResponseView<EmploymentKeywordMapListByJobtitleView>> getKeywordMapByJobtitle() {
-
-        var result = employmentFindUseCase.getEmploymentKeywordMapByJobtitleResults();
-
-        EmploymentKeywordMapListByJobtitleView employmentListView = new EmploymentKeywordMapListByJobtitleView(result);
-        ApiResponseView<EmploymentKeywordMapListByJobtitleView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
-
-        return ResponseEntity.ok(responseView);
-    }
     
 }

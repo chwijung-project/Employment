@@ -1,7 +1,9 @@
 
 package com.chwimong.project.employment.ui.view;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentKeywordTrendResult;
 
@@ -15,16 +17,26 @@ public class EmploymentKeywordTrendListView {
     private List<EmploymentKeywordCountInfo> employmentskeywordcounts;
 
     public EmploymentKeywordTrendListView(List<FindEmploymentKeywordTrendResult> result) {
-        this.employmentskeywordcounts = result.stream()
-            .map(this::convertToEmploymentKeywordCountInfo)
-            .toList();
-    }  
+        Map<String, Long> keywordCountMap = new HashMap<>();
 
-    private EmploymentKeywordCountInfo convertToEmploymentKeywordCountInfo(FindEmploymentKeywordTrendResult result) {
-        return new EmploymentKeywordCountInfo(
-            result.getKeyword(),
-            result.getCount()
-        );
+        for (FindEmploymentKeywordTrendResult item : result) {
+            String keywordStr = item.getKeyword();  
+            if (keywordStr != null && !keywordStr.isBlank()) {
+                String[] keywords = keywordStr.split(",");
+                for (String rawKeyword : keywords) {
+                    String keyword = rawKeyword.trim();
+                    if (!keyword.isEmpty()) {
+                        keywordCountMap.put(keyword, keywordCountMap.getOrDefault(keyword, 0L) + 1);
+                    }
+                }
+            }
+        }
+
+        this.employmentskeywordcounts = keywordCountMap.entrySet().stream()
+            .sorted(Map.Entry.<String, Long>comparingByValue().reversed()) // 내림차순 정렬
+            .limit(20)
+            .map(entry -> new EmploymentKeywordCountInfo(entry.getKey(), entry.getValue()))
+            .toList();
     }
     
     @Getter

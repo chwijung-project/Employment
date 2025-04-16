@@ -19,7 +19,6 @@ public interface EmploymentFindUseCase {
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
     List<FindEmploymentCountResult> getEmploymentCountResults();
     List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter);
-    List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults();
 
     List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query);
     
@@ -105,17 +104,15 @@ public interface EmploymentFindUseCase {
     @AllArgsConstructor
     @Builder
     @ToString
-    class EmploymentKeywordTrendQuery {
+    class EmploymentKeywordTrendQuery{
         private String keyword;
-        private long count;
     }
-
+    
     @Getter
     @ToString
     @Builder
     class FindEmploymentKeywordTrendResult{
         private String keyword;
-        private Long count;
     }
 
     @Getter
@@ -127,11 +124,4 @@ public interface EmploymentFindUseCase {
         private List<String> keywords;
     }
 
-    @Getter
-    @ToString
-    @Builder
-    class FindEmploymentKeywordMapResult{
-        private String jobtitle;
-        private List<String> keywords;
-    }
 }

@@ -98,11 +98,6 @@ public class EmploymentService implements EmploymentFindUseCase {
         
     }
 
-    @Override
-    public List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults() {
-        List<EmploymentKeywordMapQuery> rawData = employmentEntityRepository.findEmploymentKeywordMapByJobtitle();
-        return rawData.stream().map(this::convertToKeywordResult).collect(Collectors.toList());
-    }
 
 	public List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query) {
     	try {
@@ -133,7 +128,6 @@ public class EmploymentService implements EmploymentFindUseCase {
     private FindEmploymentKeywordTrendResult convertToKeywordTrendResult(EmploymentKeywordTrendQuery query) {
         return FindEmploymentKeywordTrendResult.builder()
             .keyword(query.getKeyword())
-            .count(query.getCount())
             .build();
     }
 
@@ -145,14 +139,7 @@ public class EmploymentService implements EmploymentFindUseCase {
             .thanks(entity.getThanks())
             .fullTxt(entity.getFullTxt())
             .build();
-    }
-
-    private FindEmploymentKeywordMapResult convertToKeywordResult(EmploymentKeywordMapQuery query) {
-        return FindEmploymentKeywordMapResult.builder()
-            .jobtitle(query.getJobtitle())
-            .keywords(query.getKeywords())
-            .build();
-    }   
+    }  
     
     private FindEmploymentResult convertToKeywordResult(EmploymentEntity entity) {
     	return FindEmploymentResult.builder()
