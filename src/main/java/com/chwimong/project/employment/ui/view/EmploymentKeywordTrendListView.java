@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentKeywordTrendResult;
+import com.chwimong.project.employment.usecase.EmploymentFindUseCase.FindEmploymentResult;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -16,10 +16,10 @@ import lombok.AllArgsConstructor;
 public class EmploymentKeywordTrendListView {
     private List<EmploymentKeywordCountInfo> employmentskeywordcounts;
 
-    public EmploymentKeywordTrendListView(List<FindEmploymentKeywordTrendResult> result) {
+    public EmploymentKeywordTrendListView(List<FindEmploymentResult> result) {
         Map<String, Long> keywordCountMap = new HashMap<>();
 
-        for (FindEmploymentKeywordTrendResult item : result) {
+        for (FindEmploymentResult item : result) {
             String keywordStr = item.getKeyword();  
             if (keywordStr != null && !keywordStr.isBlank()) {
                 String[] keywords = keywordStr.split(",");

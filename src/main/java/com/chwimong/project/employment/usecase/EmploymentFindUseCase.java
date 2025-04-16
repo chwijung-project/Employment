@@ -18,7 +18,7 @@ public interface EmploymentFindUseCase {
     Page<FindEmploymentResult> getEmployments(Criteria cri, EmploymentFindQuery query);
     List<FindEmploymentResult> getEmploymentsWithCategory(EmploymentWithCategoryQuery query);
     List<FindEmploymentCountResult> getEmploymentCountResults();
-    List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter);
+    List<FindEmploymentResult> getEmploymentKeywordTrendResults(String filter);
 
     List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query);
     
@@ -98,30 +98,6 @@ public interface EmploymentFindUseCase {
         private String thanks;
         private String fullTxt;
         private String keyword;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    @Builder
-    @ToString
-    class EmploymentKeywordTrendQuery{
-        private String keyword;
-    }
-    
-    @Getter
-    @ToString
-    @Builder
-    class FindEmploymentKeywordTrendResult{
-        private String keyword;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    @Builder
-    @ToString
-    class EmploymentKeywordMapQuery {
-        private String jobtitle;
-        private List<String> keywords;
     }
 
 }

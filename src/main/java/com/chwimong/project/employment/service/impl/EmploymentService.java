@@ -85,8 +85,8 @@ public class EmploymentService implements EmploymentFindUseCase {
     } 
     
     @Override
-    public List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter) {
-        List<EmploymentKeywordTrendQuery> rawData = null;
+    public List<FindEmploymentResult> getEmploymentKeywordTrendResults(String filter) {
+        List<EmploymentEntity> rawData = null;
 
         if ("steady".equals(filter)) {
             rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
@@ -125,9 +125,9 @@ public class EmploymentService implements EmploymentFindUseCase {
             .build();
     }
     
-    private FindEmploymentKeywordTrendResult convertToKeywordTrendResult(EmploymentKeywordTrendQuery query) {
-        return FindEmploymentKeywordTrendResult.builder()
-            .keyword(query.getKeyword())
+    private FindEmploymentResult convertToKeywordTrendResult(EmploymentEntity entity) {
+        return FindEmploymentResult.builder()
+            .keyword(entity.getKeyword())
             .build();
     }
 

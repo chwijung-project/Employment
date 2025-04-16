@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.chwimong.project.employment.persisntence.mongo.entity.EmploymentEntity;
 import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentGroupedQuery;
-import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentKeywordMapQuery;
-import com.chwimong.project.employment.usecase.EmploymentFindUseCase.EmploymentKeywordTrendQuery;
 
 @Repository
 public interface EmploymentEntityRepository extends MongoRepository<EmploymentEntity, String>, EmploymentRepositoryCustom {
@@ -28,22 +26,10 @@ public interface EmploymentEntityRepository extends MongoRepository<EmploymentEn
     List<EmploymentGroupedQuery> findGroupedEmploymentData();
 
     @Query(value = "{}", fields = "{ keyword: 1, _id: 0 }")
-    List<EmploymentKeywordTrendQuery> findEmploymentSteadyKeywordTrend();
+    List<EmploymentEntity> findEmploymentSteadyKeywordTrend();
 
     @Query(value = "{ 'crawlingDate': { $gte: ?0 } }", fields = "{ keyword: 1, _id: 0 }")
-    List<EmploymentKeywordTrendQuery> findEmploymentHotKeywordTrend(Date threeMonthsAgo);
-
-    @Aggregation(pipeline = {
-        "{ $match: { keyword: { $exists: true, $ne: [] } } }",
-        "{ $unwind: '$keyword' }",
-        "{ $group: { _id: '$filteredJobtitle', keywords: { $addToSet: '$keyword' } } }",
-        "{ $project: { " +
-            "_id: 0, " +
-            "jobtitle: '$_id', " +
-            "keywords: { $sortArray: { input: '$keywords', sortBy: 1 } } " +
-        "} }"
-    })
-    List<EmploymentKeywordMapQuery> findEmploymentKeywordMapByJobtitle();
+    List<EmploymentEntity> findEmploymentHotKeywordTrend(Date threeMonthsAgo);
 
 
 
