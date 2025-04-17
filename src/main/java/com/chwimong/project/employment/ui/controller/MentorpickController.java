@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/mentorpick")
+@RequestMapping("/v1/mentorpicks")
 
 @Tag(name = "멘토추천 API", description= "취업 능력 향상을 위한 멘토추천  API")
 public class MentorpickController {

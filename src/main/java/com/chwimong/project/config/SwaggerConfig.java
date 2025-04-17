@@ -50,7 +50,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	GroupedOpenApi mentorPickApi() {
 	    return GroupedOpenApi.builder()
 	            .group("멘토픽 API")
-	            .pathsToMatch("/v1/mentorpick/**")
+	            .pathsToMatch("/v1/mentorpicks/**")
 	            .build();
 	}
 }
