@@ -45,4 +45,12 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	            .pathsToMatch("/v1/view/compact-employments/**")
 	            .build();
 	}
+
+	@Bean
+	GroupedOpenApi mentorPickApi() {
+	    return GroupedOpenApi.builder()
+	            .group("멘토픽 API")
+	            .pathsToMatch("/v1/mentorpick/**")
+	            .build();
+	}
 }
