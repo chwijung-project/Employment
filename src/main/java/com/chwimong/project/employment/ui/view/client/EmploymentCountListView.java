@@ -1,4 +1,4 @@
-package com.chwimong.project.employment.ui.view;
+package com.chwimong.project.employment.ui.view.client;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -85,8 +85,8 @@ public class EmploymentService implements EmploymentFindUseCase {
     } 
     
     @Override
-    public List<FindEmploymentKeywordTrendResult> getEmploymentKeywordTrendResults(String filter) {
-        List<EmploymentKeywordTrendQuery> rawData = null;
+    public List<FindEmploymentResult> getEmploymentKeywordTrendResults(String filter) {
+        List<EmploymentEntity> rawData = null;
 
         if ("steady".equals(filter)) {
             rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
@@ -98,11 +98,6 @@ public class EmploymentService implements EmploymentFindUseCase {
         
     }
 
-    @Override
-    public List<FindEmploymentKeywordMapResult> getEmploymentKeywordMapByJobtitleResults() {
-        List<EmploymentKeywordMapQuery> rawData = employmentEntityRepository.findEmploymentKeywordMapByJobtitle();
-        return rawData.stream().map(this::convertToKeywordResult).collect(Collectors.toList());
-    }
 
 	public List<FindEmploymentResult> getEmploymentsWithKeyword(EmploymentWithKeywordQuery query) {
     	try {
@@ -130,10 +125,9 @@ public class EmploymentService implements EmploymentFindUseCase {
             .build();
     }
     
-    private FindEmploymentKeywordTrendResult convertToKeywordTrendResult(EmploymentKeywordTrendQuery query) {
-        return FindEmploymentKeywordTrendResult.builder()
-            .keyword(query.getKeyword())
-            .count(query.getCount())
+    private FindEmploymentResult convertToKeywordTrendResult(EmploymentEntity entity) {
+        return FindEmploymentResult.builder()
+            .keyword(entity.getKeyword())
             .build();
     }
 
@@ -145,14 +139,7 @@ public class EmploymentService implements EmploymentFindUseCase {
             .thanks(entity.getThanks())
             .fullTxt(entity.getFullTxt())
             .build();
-    }
-
-    private FindEmploymentKeywordMapResult convertToKeywordResult(EmploymentKeywordMapQuery query) {
-        return FindEmploymentKeywordMapResult.builder()
-            .jobtitle(query.getJobtitle())
-            .keywords(query.getKeywords())
-            .build();
-    }   
+    }  
     
     private FindEmploymentResult convertToKeywordResult(EmploymentEntity entity) {
     	return FindEmploymentResult.builder()
