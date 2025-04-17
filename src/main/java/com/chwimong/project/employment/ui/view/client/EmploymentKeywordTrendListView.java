@@ -1,5 +1,5 @@
 
-package com.chwimong.project.employment.ui.view;
+package com.chwimong.project.employment.ui.view.client;
 
 import java.util.HashMap;
 import java.util.List;
