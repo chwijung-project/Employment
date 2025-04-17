@@ -33,6 +33,7 @@ public class EmploymentKeywordTrendListView {
         }
 
         this.employmentskeywordcounts = keywordCountMap.entrySet().stream()
+            .filter(entry -> !entry.getKey().equals("NO_TECHNICAL_SKILLS"))
             .sorted(Map.Entry.<String, Long>comparingByValue().reversed()) // 내림차순 정렬
             .limit(20)
             .map(entry -> new EmploymentKeywordCountInfo(entry.getKey(), entry.getValue()))
