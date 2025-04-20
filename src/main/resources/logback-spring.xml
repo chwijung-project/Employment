@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
-<configuration>
+<configuration debug="false">
 
+   <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
@@ -10,6 +11,8 @@
    </root>
 
    <springProfile name="prod">
+   	   <timestamp key="timestamp" datePattern="yyyy-MM-dd"/>
+   
        <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%X{requestId}] %-5level - %msg %n"/>
        <property name="LOG_REGION" value="ap-northeast-2"/>
        <property name="BATCH_SIZE" value="50"/>
@@ -24,7 +27,7 @@
                <pattern>${LOG_PATTERN}</pattern>
            </layout>
            <logGroupName>/chwimong/application</logGroupName>
-           <logStreamUuidPrefix>chwimong_employment_business_${DATE}-%d{yyyy-MM-dd}-</logStreamUuidPrefix>
+           <logStreamUuidPrefix>chwimong_business_${timestamp}-</logStreamUuidPrefix>uidPrefix>
            <logRegion>${LOG_REGION}</logRegion>
            <maxBatchLogEvents>${BATCH_SIZE}</maxBatchLogEvents>
            <maxFlushTimeMillis>${FLUSH_TIME}</maxFlushTimeMillis>
@@ -38,7 +41,7 @@
                <pattern>${LOG_PATTERN}</pattern>
            </layout>
            <logGroupName>/chwimong/application</logGroupName>
-           <logStreamUuidPrefix>chwimong_employment_error_%d{yyyy-MM-dd}-</logStreamUuidPrefix>
+           <logStreamUuidPrefix>chwimong_error_${timestamp}-</logStreamUuidPrefix>
            <logRegion>${LOG_REGION}</logRegion>
            <maxBatchLogEvents>${BATCH_SIZE}</maxBatchLogEvents>
            <maxFlushTimeMillis>${FLUSH_TIME}</maxFlushTimeMillis>
@@ -46,10 +49,10 @@
 		   <retentionTimeDays>${ERROR_RETENTION}</retentionTimeDays>
        </appender>
 
-       <logger name="com.chwimong.project.employment.service" level="INFO">
+       <logger name="com.chwimong.project" level="INFO">
            <appender-ref ref="BUSINESS_LOG"/>
        </logger>
-       <logger name="com.chwimong.project.employment.exception" level="ERROR">
+       <logger name="com.chwimong.project" level="ERROR">
            <appender-ref ref="ERROR_LOG"/>
        </logger>
    </springProfile>
