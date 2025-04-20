@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.EmploymentException;
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.common.Criteria;
 import com.chwimong.project.employment.ui.common.Page;
@@ -66,7 +66,7 @@ public class EmploymentController {
     	} catch (Exception e) {
     		log.error("[EmploymentController] getEmployments 채용정보 조회 실패 - request: {}, error: {}", 
     				request, e.getMessage());
-	        throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+	        throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
 

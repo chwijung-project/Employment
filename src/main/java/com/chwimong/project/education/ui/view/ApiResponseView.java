@@ -1,7 +1,7 @@
 package com.chwimong.project.education.ui.view;
 
 import com.chwimong.project.education.exception.MessageType;
-import com.chwimong.project.employment.ui.common.Page;
+import com.chwimong.project.education.ui.common.Page;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
