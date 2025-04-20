@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.EmploymentException;
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiResponseView;
 import com.chwimong.project.employment.ui.view.filterSystem.EmploymentJobFilteringListView;
@@ -49,7 +49,7 @@ public class CompactEmploymentController {
     		
     	} catch(Exception e) {
     		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 - jobtitle: {}", e.getMessage());
-    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
     
@@ -70,7 +70,7 @@ public class CompactEmploymentController {
     		
     	} catch(Exception e) {
     		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 - keyword: {}", e.getMessage());
-    		throw new ChwimongException(MessageType.INTERNAL_SERVER_ERROR);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
 }

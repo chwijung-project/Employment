@@ -1,6 +1,6 @@
 package com.chwimong.project.employment.ui.advice;
 
-import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.EmploymentException;
 import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.ui.view.ApiErrorView;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @Slf4j
 @RestControllerAdvice
-public class ChwimongControllerAdvice extends ResponseEntityExceptionHandler {
+public class EmploymentControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ClientAbortException.class)
     public ResponseEntity<?> clientAbortException(Exception ex) {
@@ -23,8 +23,8 @@ public class ChwimongControllerAdvice extends ResponseEntityExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ChwimongException.class)
-    public ResponseEntity<?> operationMessageException(ChwimongException ex) {
+    @ExceptionHandler(EmploymentException.class)
+    public ResponseEntity<?> operationMessageException(EmploymentException ex) {
         return new ResponseEntity<>(new ApiErrorView(ex), ex.getStatus());
     }
 }

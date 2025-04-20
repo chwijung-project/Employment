@@ -1,6 +1,6 @@
 package com.chwimong.project.employment.ui.view;
 
-import com.chwimong.project.employment.exception.ChwimongException;
+import com.chwimong.project.employment.exception.EmploymentException;
 import com.chwimong.project.employment.exception.MessageType;
 import lombok.Getter;
 import lombok.ToString;
@@ -21,7 +21,7 @@ public class ApiErrorView {
         this.errors = Collections.singletonList(Error.errorWithMessageType(messageType));
     }
 
-    public ApiErrorView(ChwimongException exception) {
+    public ApiErrorView(EmploymentException exception) {
         this.errors = Collections.singletonList(Error.errorWithException(exception));
     }
 
@@ -35,7 +35,7 @@ public class ApiErrorView {
             return new Error(messageType.name(), messageType.getMessage());
         }
 
-        public static Error errorWithException(ChwimongException exception) {
+        public static Error errorWithException(EmploymentException exception) {
             return new Error(exception.getType(), exception.getMessage());
         }
 
