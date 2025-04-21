@@ -27,7 +27,7 @@
                <pattern>${LOG_PATTERN}</pattern>
            </layout>
            <logGroupName>/chwimong/application</logGroupName>
-           <logStreamUuidPrefix>chwimong_business_${timestamp}-</logStreamUuidPrefix>uidPrefix>
+           <logStreamUuidPrefix>chwimong_business_${timestamp}-</logStreamUuidPrefix>
            <logRegion>${LOG_REGION}</logRegion>
            <maxBatchLogEvents>${BATCH_SIZE}</maxBatchLogEvents>
            <maxFlushTimeMillis>${FLUSH_TIME}</maxFlushTimeMillis>
