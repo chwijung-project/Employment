@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class ApiErrorView {
+public class ApiErrorView { 
     private final List<Error> errors;
 
     public ApiErrorView(List<MessageType> messageTypes) {

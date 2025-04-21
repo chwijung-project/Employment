@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
-public class EducationControllerAdvice extends ResponseEntityExceptionHandler {
+public class EducationControllerAdvice extends ResponseEntityExceptionHandler { 
 
 	@ExceptionHandler(ClientAbortException.class)
     public ResponseEntity<?> clientAbortException(Exception ex) {

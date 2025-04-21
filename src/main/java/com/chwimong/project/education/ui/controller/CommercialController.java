@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/educations/commercials")
+@RequestMapping("/v1/educations/commercials") 
 @Tag(name = "부트캠프 정보 API", description= "부트캠프 검색 및 조회를 위한 메인 API")
 public class CommercialController {
 	private final CommercialFindUseCase commercialFindUseCase;

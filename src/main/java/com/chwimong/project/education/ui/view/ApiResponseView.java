@@ -10,7 +10,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL) 
 @JsonPropertyOrder({ "meta", "data" })
 public class ApiResponseView<T> {
     private final T data;

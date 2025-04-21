@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommercialEntity {
+public class CommercialEntity { 
 
 	@Id
 	private String id;

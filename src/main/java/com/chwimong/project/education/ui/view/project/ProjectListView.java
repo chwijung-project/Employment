@@ -11,7 +11,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class ProjectListView {
+public class ProjectListView { 
 
 	@JsonValue
 	private List<ProjectView> projectViewList;

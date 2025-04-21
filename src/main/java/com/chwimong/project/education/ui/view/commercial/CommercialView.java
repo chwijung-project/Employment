@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL) 
 public class CommercialView {
 	private String id;
 	private String provider;

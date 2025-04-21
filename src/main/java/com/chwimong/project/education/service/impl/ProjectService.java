@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class ProjectService implements ProjectFindUseCase {
+public class ProjectService implements ProjectFindUseCase { 
 	private final ProjectEntityRepository projectEntityRepository;
 	
 	@Autowired

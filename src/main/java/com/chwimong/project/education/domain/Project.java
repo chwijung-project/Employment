@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-public class Project {
+public class Project { 
 	private final String id;
     private final String projectName;
     private final String teamName;

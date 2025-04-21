@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Page {
+public class Page { 
 	
     private int pageStart;
     private int pageEnd;

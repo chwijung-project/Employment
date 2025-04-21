@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Builder
-public class Commercial {
+public class Commercial { 
 	private final String id;
 	private final String provider;
 	private final String title;
