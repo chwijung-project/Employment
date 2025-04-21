@@ -53,4 +53,20 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	            .pathsToMatch("/v1/mentorpicks/**")
 	            .build();
 	}
+	
+	@Bean
+	GroupedOpenApi projectApi() {
+	    return GroupedOpenApi.builder()
+	            .group("프로젝트 정보 API")
+	            .pathsToMatch("/v1/educations/projects/**")
+	            .build();
+	}
+
+	@Bean
+	GroupedOpenApi commercialApi() {
+	    return GroupedOpenApi.builder()
+	            .group("부트캠프 정보 API")
+	            .pathsToMatch("/v1/educations/commercials/**")
+	            .build();
+	}
 }
