@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.chwimong.project.education.persistence.mongo.entity.ProjectEntity;
 
 @Repository
-public interface ProjectEntityRepository extends MongoRepository<ProjectEntity, String> {
+public interface ProjectEntityRepository extends MongoRepository<ProjectEntity, String> { 
 
 }

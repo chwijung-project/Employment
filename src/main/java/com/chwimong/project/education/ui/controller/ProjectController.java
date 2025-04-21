@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/v1/educations/projects")
+@RequestMapping("/v1/educations/projects") 
 @Tag(name = "프로젝트 정보 API", description= "프로젝트 검색 및 조회를 위한 메인 API")
 public class ProjectController {
 	private final ProjectFindUseCase projectFindUseCase;

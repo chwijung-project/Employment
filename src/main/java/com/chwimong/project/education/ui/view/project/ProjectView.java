@@ -11,7 +11,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL) 
 public class ProjectView {
    private String id;
    private String projectName;

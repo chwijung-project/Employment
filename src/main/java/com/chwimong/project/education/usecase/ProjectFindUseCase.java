@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-public interface ProjectFindUseCase {
+public interface ProjectFindUseCase { 
 
 	List<FindProjectResult> getProjects();
 	

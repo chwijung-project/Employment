@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.chwimong.project.education.persistence.mongo.entity.CommercialEntity;
 
 @Repository
-public interface CommercialEntityRepository extends MongoRepository<CommercialEntity, String> {
+public interface CommercialEntityRepository extends MongoRepository<CommercialEntity, String> { 
 
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class EducationException extends RuntimeException{
+public class EducationException extends RuntimeException {
 	private static final long serialVersionUID = 4830719456759247700L;
 	
 	private final HttpStatus status;

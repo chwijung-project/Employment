@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectEntity {
+public class ProjectEntity { 
 
     @Id
     private String id;
