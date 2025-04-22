@@ -49,6 +49,7 @@ bootJar {
     
     from("build/classes/java/main") {
         include "com/chwimong/project/**"
+        
     }
     
     from("src/main/resources") {
