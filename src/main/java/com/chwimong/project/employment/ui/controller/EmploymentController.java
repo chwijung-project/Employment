@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1/employments")
-@Tag(name = "채용정보 API", description= "채용정보 검색 및 조회를 위한 메인 API")
+@Tag(name = "채용정보 API", description= "채용정보 검색 및 조회를 위한 메인 API") 
 public class EmploymentController {
     private final EmploymentFindUseCase employmentFindUseCase;
 
