@@ -80,5 +80,5 @@ jobs:
       # 배포 검증
       - name: Verify deployment
         run: |
-          sleep 30
+          sleep 40
           curl -f http://${{ secrets.EC2_REMOTE_IP }}:8080/actuator/health || exit 1
