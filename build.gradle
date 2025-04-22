@@ -43,17 +43,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-bootJar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    
-    from("build/classes/java/main") {
-        include "com/chwimong/project/**"
-        
-    }
-    
-    from("src/main/resources") {
-        include "**/*.xml"
-        include "**/*.properties"
-    }
-}
