@@ -36,7 +36,7 @@ jobs:
           architecture: 'x64'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew clean bootJar
 
       - name: Check JAR file
         run: ls -la build/libs/
