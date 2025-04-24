@@ -35,8 +35,8 @@ jobs:
           java-package: 'jdk'
           architecture: 'x64'
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Build Spring Boot fat JAR
+        run: ./gradlew clean bootJar
 
       - name: Check JAR file
         run: ls -la build/libs/
