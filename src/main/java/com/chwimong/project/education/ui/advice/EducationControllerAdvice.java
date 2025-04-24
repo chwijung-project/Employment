@@ -21,12 +21,18 @@ public class EducationControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(ClientAbortException.class)
     public ResponseEntity<?> clientAbortException(Exception ex) {
+		log.warn("[EducationControllerAdvice] clientAbortException: {}", ex.getMessage());
         return new ResponseEntity<>(new ApiErrorView(Collections.singletonList(MessageType.INTERNAL_SERVER_ERROR)),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EducationException.class)
     public ResponseEntity<?> operationMessageException(EducationException ex) {
+    	if (ex.getStatus().is5xxServerError()) {
+            log.error("[operationMessageException_education_server] type: {}, message: {}", ex.getType(), ex.getMessage(), ex);
+        } else if (ex.getStatus().is4xxClientError()) {
+            log.warn("[operationMessageException_education_client] type: {}, message: {}", ex.getType(), ex.getMessage());
+        }
         return new ResponseEntity<>(new ApiErrorView(ex), ex.getStatus());
     }
 }
