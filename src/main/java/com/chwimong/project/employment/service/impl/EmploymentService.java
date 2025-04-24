@@ -46,7 +46,7 @@ public class EmploymentService implements EmploymentFindUseCase {
 			return employmentEntities.map(this::convertToFindEmploymentsResult);
 			
     	} catch (Exception e) {
-            log.error("[EmploymentService] 채용정보 조회 실패 - cri: {}, query: {}, error: {}", cri, query, e.getMessage(), e);
+            log.error("[EmploymentService] getEmployments - error: {}", e.getMessage(), e);
             throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
         }
     }
@@ -60,7 +60,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     				.map(this::convertToCategoryResult)
     				.collect(Collectors.toList());
     	} catch(Exception e) {
-    		log.error("[EmploymentService] getEmploymentsWithCategory");
+    		log.error("[EmploymentService] getEmploymentsWithCategory", e.getMessage(), e);
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
@@ -107,7 +107,7 @@ public class EmploymentService implements EmploymentFindUseCase {
     				.map(this::convertToKeywordResult)
     				.collect(Collectors.toList());
     	} catch(Exception e) {
-    		log.error("[EmploymentService] getEmploymentsWithKeyword");
+    		log.error("[EmploymentService] getEmploymentsWithKeyword", e.getMessage(), e);
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
 	}

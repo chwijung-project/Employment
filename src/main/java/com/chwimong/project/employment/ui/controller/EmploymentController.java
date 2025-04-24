@@ -41,8 +41,12 @@ public class EmploymentController {
     public ResponseEntity<ApiResponseView<EmploymentListView>> getEmployments(@ModelAttribute FindEmploymentRequest request) {
 
     	try {
-	    	log.info("[EmploymentController] getEmployments 채용정보 조회 요청 - job: {}, region: {}, searchValue: {}", 
-	    			request.getJob(), request.getRegion(), request.getSearchValue());
+    		if ((request.getJob() != null && !request.getJob().isEmpty()) || 
+	    	    (request.getRegion() != null && !request.getRegion().isEmpty()) || 
+	    	    (request.getSearchValue() != null && !request.getSearchValue().isEmpty())) {
+	    	    log.info("[채용정보 검색] job: {}, region: {}, searchValue: {}", 
+	    		    	request.getJob(), request.getRegion(), request.getSearchValue());
+	    	}
 	    	
 	    	EmploymentFindQuery query = new EmploymentFindQuery(
 		        request.getId(),
@@ -65,7 +69,7 @@ public class EmploymentController {
 	        
     	} catch (Exception e) {
     		log.error("[EmploymentController] getEmployments 채용정보 조회 실패 - request: {}, error: {}", 
-    				request, e.getMessage());
+    				request, e.getMessage(), e);
 	        throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
