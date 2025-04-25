@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         @Server(
             description = "운영 서버",
-            url = "http://www.chwimong.com"
+            url = "http://www.employ.chwimong.com"
         )
     }
 	
