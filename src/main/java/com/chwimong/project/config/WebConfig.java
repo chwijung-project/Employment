@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	@Value("${cors.allowed-origins:http://localhost:3000}")
+	@Value("${cors.allowed-origins:https://chwimong.com, http://localhost:3000}")
     private String[] allowedOrigins;
 	
     @Override
@@ -17,7 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins(allowedOrigins)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .exposedHeaders("Access-Control-Allow-Origin")
                 .allowCredentials(true);
     }
 }
