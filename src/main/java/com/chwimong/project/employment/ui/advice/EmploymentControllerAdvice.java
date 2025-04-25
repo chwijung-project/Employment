@@ -19,12 +19,18 @@ public class EmploymentControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ClientAbortException.class)
     public ResponseEntity<?> clientAbortException(Exception ex) {
+    	log.warn("[EmploymentControllerAdvice] clientAbortException: {}", ex.getMessage());
         return new ResponseEntity<>(new ApiErrorView(Collections.singletonList(MessageType.INTERNAL_SERVER_ERROR)),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EmploymentException.class)
     public ResponseEntity<?> operationMessageException(EmploymentException ex) {
+    	if (ex.getStatus().is5xxServerError()) {
+            log.error("[operationMessageException_employment_server] type: {}, message: {}", ex.getType(), ex.getMessage(), ex);
+        } else if (ex.getStatus().is4xxClientError()) {
+            log.warn("[operationMessageException_employment_client] type: {}, message: {}", ex.getType(), ex.getMessage());
+        }
         return new ResponseEntity<>(new ApiErrorView(ex), ex.getStatus());
     }
 }

@@ -48,7 +48,7 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 - jobtitle: {}", e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 : ", e.getMessage());
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
@@ -69,7 +69,7 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 - keyword: {}", e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 : ", e.getMessage());
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
