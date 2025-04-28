@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1/view/compact-employments")
-@Tag(name = "요약 채용정보 API", description= "요약 채용정보 조회를 위한 메인 API")
+@Tag(name = "요약 채용정보 API", description= "채용정보 필터링 및 키워드 분석을 위한 간소화 API")
 @ToString
 public class CompactEmploymentController {
     private final EmploymentFindUseCase employmentFindUseCase;
@@ -33,7 +33,7 @@ public class CompactEmploymentController {
     }
 
     @GetMapping("")
-    @Operation(summary = "직무명 필터링용 요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
+    @Operation(summary = "직무명 필터링용 요약 채용정보 조회", description = "채용공고의 요약 정보를 조회하여 직무명 필터링에 활용")
     public ResponseEntity<ApiResponseView<EmploymentJobFilteringListView>> getCompactEmploymentsForFiltering(
     		@RequestParam(value = "jobtitle", required = false) String jobtitle
     ) {
@@ -48,13 +48,13 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 : ", e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForFiltering 요약 채용정보 조회 실패 : ", e.getMessage(), e);
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
     
     @GetMapping("/keyword")
-    @Operation(summary = "키워드 추출용 요약 채용정보 조회", description = "조건에 따른 요약 채용정보 목록을 조회")
+    @Operation(summary = "키워드 추출용 요약 채용정보 조회", description = "채용공고의 요약 정보를 조회하여 키워드 추출에 활용")
     public ResponseEntity<ApiResponseView<EmploymentKeywordExtractionListView>> getCompactEmploymentsForKeyword(
     		@RequestParam(value = "keyword", required = false) String keyword
 	) {
@@ -69,7 +69,7 @@ public class CompactEmploymentController {
     		return ResponseEntity.ok(responseView);
     		
     	} catch(Exception e) {
-    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 : ", e.getMessage());
+    		log.error("[CompactEmploymentController] getCompactEmploymentsForKeyword 요약 채용정보 조회 실패 : ", e.getMessage(), e);
     		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }

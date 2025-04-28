@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1/employments")
-@Tag(name = "채용정보 API", description= "채용정보 검색 및 조회를 위한 메인 API") 
+@Tag(name = "채용정보 API", description= "직무 채용정보 제공 및 분석을 위한 메인 API") 
 public class EmploymentController {
     private final EmploymentFindUseCase employmentFindUseCase;
 
@@ -68,45 +68,56 @@ public class EmploymentController {
 	        return ResponseEntity.ok(responseView);
 	        
     	} catch (Exception e) {
-    		log.error("[EmploymentController] getEmployments 채용정보 조회 실패 - request: {}, error: {}", 
-    				request, e.getMessage(), e);
+    		log.error("[EmploymentController] getEmployments 채용정보 조회 실패 - error: {}", e.getMessage(), e);
 	        throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
     	}
     }
 
     @GetMapping("/dashboard")
-    @Operation(summary = "직무별, 크롤링 주차별 채용공고 개수 조회", description = "직무별로 크롤링 주차에 따른 채용공고 개수 조회")
+    @Operation(summary = "직무별 채용공고 통계 조회", description = "직무별로 크롤링 주차에 따른 채용공고 개수 조회")
     public ResponseEntity<ApiResponseView<EmploymentCountListView>> getWeeklyEmploymentCountByJob() {
 
-    	var result = employmentFindUseCase.getEmploymentCountResults();
-        EmploymentCountListView employmentListView = new EmploymentCountListView(result.stream().toList());
-        ApiResponseView<EmploymentCountListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
-        
-        return ResponseEntity.ok(responseView);
+    	try {
+	    	var result = employmentFindUseCase.getEmploymentCountResults();
+	        EmploymentCountListView employmentListView = new EmploymentCountListView(result.stream().toList());
+	        ApiResponseView<EmploymentCountListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
+	        
+	        return ResponseEntity.ok(responseView);
+    	} catch(Exception e) {
+    		log.error("[EmploymentController] getWeeklyEmploymentCountByJob 직무별 채용공고 통계 조회 실패 - error: {}", e.getMessage(), e);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     }
 
     @GetMapping("/keyword-trend")
-    @Operation(summary = "steady, new 트렌드 키워드", description = "키워드의 빈도 추이를 알기 위해 steady, new 키워드를 조회")
+    @Operation(summary = "기술 키워드 트렌드 분석", description = "키워드의 빈도 추이를 알기 위한 항목별 키워드(steady, new)를 조회")
     public ResponseEntity<ApiResponseView<EmploymentKeywordTrendListView>> getKeywordTrend(
-            @RequestParam(name = "filter", required = true) String filter) {
-        
-                if (!"steady".equalsIgnoreCase(filter) && !"new".equalsIgnoreCase(filter)) {
-                    return ResponseEntity.badRequest().body(
-                                                            ApiResponseView.of(
-                                                                MessageType.BAD_REQUEST,
-                                                                null,
-                                                                null,
-                                                                "유효하지 않은 filter 값입니다. 'steady' 또는 'new'만 허용됩니다."
-                                                            )
-                                                        );
-                }
+            @RequestParam(name = "filter", required = true) String filter
+    ) {
+    	
+		try {
     
-        var result = employmentFindUseCase.getEmploymentKeywordTrendResults(filter);
+            if (!"steady".equalsIgnoreCase(filter) && !"new".equalsIgnoreCase(filter)) {
+                return ResponseEntity.badRequest().body(
+                                                        ApiResponseView.of(
+                                                            MessageType.BAD_REQUEST,
+                                                            null,
+                                                            null,
+                                                            "유효하지 않은 filter 값입니다. 'steady' 또는 'new'만 허용됩니다."
+                                                        )
+                                                    );
+            }
 
-        EmploymentKeywordTrendListView employmentListView = new EmploymentKeywordTrendListView(result);
-        ApiResponseView<EmploymentKeywordTrendListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
-
-        return ResponseEntity.ok(responseView);
+	        var result = employmentFindUseCase.getEmploymentKeywordTrendResults(filter);
+	
+	        EmploymentKeywordTrendListView employmentListView = new EmploymentKeywordTrendListView(result);
+	        ApiResponseView<EmploymentKeywordTrendListView> responseView = ApiResponseView.of(MessageType.OK, employmentListView);
+	
+	        return ResponseEntity.ok(responseView);
+		} catch(Exception e) {
+			log.error("[EmploymentController] getKeywordTrend 기술 키워드 트렌드 분석 실패 - filter: {}, error: {}", filter, e.getMessage(), e);
+	        throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+		}
     }
 
     

@@ -34,7 +34,7 @@ public class ProjectService implements ProjectFindUseCase {
 					.map(this::convertToFindProjectsResult)
 					.collect(Collectors.toList());
 		} catch (Exception e) {
-			log.error("[ProjectService] getProjects");
+			log.error("[ProjectService] getProjects - error: {}", e.getMessage(), e);
 			throw new EducationException(MessageType.INTERNAL_SERVER_ERROR);
 		}
 	}

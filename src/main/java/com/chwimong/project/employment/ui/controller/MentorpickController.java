@@ -11,6 +11,8 @@ import com.chwimong.project.employment.ui.view.client.MentorpickListView;
 import com.chwimong.project.employment.usecase.MentorpickFindUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
+
+import com.chwimong.project.employment.exception.EmploymentException;
 import com.chwimong.project.employment.exception.MessageType;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/v1/mentorpicks")
 
-@Tag(name = "멘토추천 API", description= "취업 능력 향상을 위한 멘토추천  API")
+@Tag(name = "멘토추천 API", description= "AI 직무별 핵심 기술 역량 추천 정보 제공 API")
 public class MentorpickController {
     private final MentorpickFindUseCase mentorpickFindUseCase;
 
@@ -29,15 +31,20 @@ public class MentorpickController {
     }
 
     @GetMapping("")
-    @Operation(summary = "멘토가 추천하는 능력", description = "멘토가 추천하는 취업하려면 필요한 능력")
+    @Operation(summary = "멘토픽 목록 조회", description = "직무별로 필요한 기술 스택 정보를 카테고리별로 조회")
     public ResponseEntity<ApiResponseView<MentorpickListView>> getEmployments() {
 
-        log.info("[MentorpickController] getMentorpick 멘토추천 능력 조회 요청");
-        var result = mentorpickFindUseCase.getMentorpick();
-        MentorpickListView view = new MentorpickListView(result.stream().toList());
-        ApiResponseView<MentorpickListView> response = ApiResponseView.of(MessageType.OK, view);
-        
-        return ResponseEntity.ok(response);
+    	try {
+    		var result = mentorpickFindUseCase.getMentorpick();
+    		
+    		MentorpickListView view = new MentorpickListView(result.stream().toList());
+    		ApiResponseView<MentorpickListView> response = ApiResponseView.of(MessageType.OK, view);
+    		
+    		return ResponseEntity.ok(response);
+    	} catch(Exception e) {
+    		log.error("[MentorpickController] getEmployments 멘토픽 목록 조회 실패 ", e.getMessage(), e);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     }
 }
     		

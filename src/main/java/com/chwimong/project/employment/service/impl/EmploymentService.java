@@ -68,33 +68,43 @@ public class EmploymentService implements EmploymentFindUseCase {
     @Override
     public List<FindEmploymentCountResult> getEmploymentCountResults() {
 
-        List<EmploymentGroupedQuery> rawData = employmentEntityRepository.findGroupedEmploymentData();
-        Map<String, FindEmploymentCountResult> groupedMap = new LinkedHashMap<>();
-
-        for (EmploymentGroupedQuery data : rawData) {
-            groupedMap.computeIfAbsent(data.getCrawlingDate(), date -> 
-                FindEmploymentCountResult.builder()
-                    .crawlingDate(date)
-                    .month(data.getMonth())
-                    .jobs(new ArrayList<>()) 
-                    .build()
-            ).getJobs().add(new JobData(data.getFilteredJobtitle(), data.getCount()));
-        }
-        
-        return new ArrayList<>(groupedMap.values());
+    	try {
+    		List<EmploymentGroupedQuery> rawData = employmentEntityRepository.findGroupedEmploymentData();
+    		Map<String, FindEmploymentCountResult> groupedMap = new LinkedHashMap<>();
+    		
+    		for (EmploymentGroupedQuery data : rawData) {
+    			groupedMap.computeIfAbsent(data.getCrawlingDate(), date -> 
+    			FindEmploymentCountResult.builder()
+    			.crawlingDate(date)
+    			.month(data.getMonth())
+    			.jobs(new ArrayList<>()) 
+    			.build()
+    					).getJobs().add(new JobData(data.getFilteredJobtitle(), data.getCount()));
+    		}
+    		
+    		return new ArrayList<>(groupedMap.values());
+    	} catch(Exception e) {
+    		log.error("[EmploymentService] getEmploymentCountResults", e.getMessage(), e);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     } 
     
     @Override
     public List<FindEmploymentResult> getEmploymentKeywordTrendResults(String filter) {
-        List<EmploymentEntity> rawData = null;
-
-        if ("steady".equals(filter)) {
-            rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
-        } else if ("new".equals(filter)) {
-            Date threeMonthsAgo = Date.from(LocalDate.now().minusMonths(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
-            rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(threeMonthsAgo);
-        }
-        return rawData.stream().map(this::convertToKeywordTrendResult).collect(Collectors.toList());
+    	try {
+    		List<EmploymentEntity> rawData = null;
+    		
+    		if ("steady".equals(filter)) {
+    			rawData = employmentEntityRepository.findEmploymentSteadyKeywordTrend();
+    		} else if ("new".equals(filter)) {
+    			Date threeMonthsAgo = Date.from(LocalDate.now().minusMonths(3).atStartOfDay(ZoneId.systemDefault()).toInstant());
+    			rawData = employmentEntityRepository.findEmploymentHotKeywordTrend(threeMonthsAgo);
+    		}
+    		return rawData.stream().map(this::convertToKeywordTrendResult).collect(Collectors.toList());
+    	} catch(Exception e) {
+    		log.error("[EmploymentService] getEmploymentKeywordTrendResults", e.getMessage(), e);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
         
     }
 
