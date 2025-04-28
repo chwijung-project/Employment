@@ -49,7 +49,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	@Bean
 	GroupedOpenApi mentorPickApi() {
 	    return GroupedOpenApi.builder()
-	            .group("멘토픽 API")
+	            .group("멘토추천 API")
 	            .pathsToMatch("/v1/mentorpicks/**")
 	            .build();
 	}
@@ -57,7 +57,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	@Bean
 	GroupedOpenApi projectApi() {
 	    return GroupedOpenApi.builder()
-	            .group("프로젝트 정보 API")
+	            .group("프로젝트 API")
 	            .pathsToMatch("/v1/educations/projects/**")
 	            .build();
 	}
@@ -65,7 +65,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 	@Bean
 	GroupedOpenApi commercialApi() {
 	    return GroupedOpenApi.builder()
-	            .group("부트캠프 정보 API")
+	            .group("부트캠프 API")
 	            .pathsToMatch("/v1/educations/commercials/**")
 	            .build();
 	}
