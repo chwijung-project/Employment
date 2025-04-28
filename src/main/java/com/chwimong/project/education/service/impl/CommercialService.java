@@ -34,7 +34,7 @@ public class CommercialService implements CommercialFindUseCase {
 					.map(this::convertToFindCommercialResult)
 					.collect(Collectors.toList());
 		} catch(Exception e) {
-			log.error("[CommercialService] getCommercials");
+			log.error("[CommercialService] getCommercials - error: {}", e.getMessage(), e);
 			throw new EducationException(MessageType.INTERNAL_SERVER_ERROR);
 		}
 	}

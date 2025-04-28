@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.chwimong.project.employment.persisntence.mongo.repository.MentorpickEntityRepository;
+import com.chwimong.project.employment.exception.EmploymentException;
+import com.chwimong.project.employment.exception.MessageType;
 import com.chwimong.project.employment.persisntence.mongo.entity.MentorpickEntity;
 import com.chwimong.project.employment.usecase.MentorpickFindUseCase;
 
@@ -23,9 +25,14 @@ public class MentorpickService implements MentorpickFindUseCase{
 
     @Override
     public List<FindMentorpickResult> getMentorpick() {
-        List<MentorpickEntity> entities = mentorpickEntityRepository.findAll();
-        return entities.stream().map(this::convertToFindMentorpickResult)
-                .toList();
+    	try {
+    		List<MentorpickEntity> entities = mentorpickEntityRepository.findAll();
+    		return entities.stream().map(this::convertToFindMentorpickResult)
+    				.toList();
+    	} catch(Exception e) {
+    		log.error("[MentorpickService] getMentorpick - error: {}", e.getMessage(), e);
+    		throw new EmploymentException(MessageType.INTERNAL_SERVER_ERROR);
+    	}
     }
 
     private FindMentorpickResult convertToFindMentorpickResult(MentorpickEntity entity) {

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1/educations/projects") 
-@Tag(name = "프로젝트 정보 API", description= "프로젝트 검색 및 조회를 위한 메인 API")
+@Tag(name = "프로젝트 API", description= "프로젝트 정보 제공 API")
 public class ProjectController {
 	private final ProjectFindUseCase projectFindUseCase;
 
@@ -29,7 +29,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping("")
-	@Operation(summary = "프로젝트 정보 조회", description = "프로젝트 목록을 조회")
+	@Operation(summary = "프로젝트 목록 조회", description = "AI/IT 분야 프로젝트 사례 목록을 조회")
 	public ResponseEntity<ApiResponseView<ProjectListView>> getProjects() {
 		
 		try {
@@ -41,7 +41,7 @@ public class ProjectController {
 			return ResponseEntity.ok(responseView);
 			
 		} catch(Exception e) {
-			log.error("[ProjectController] getProjects 프로젝트 정보 조회 실패 ", e.getMessage());
+			log.error("[ProjectController] getProjects 프로젝트 목록 조회 실패 ", e.getMessage(), e);
 			throw new EducationException(MessageType.INTERNAL_SERVER_ERROR);
 		}
 	}

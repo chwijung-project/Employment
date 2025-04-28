@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/v1/educations/commercials") 
-@Tag(name = "부트캠프 정보 API", description= "부트캠프 검색 및 조회를 위한 메인 API")
+@Tag(name = "부트캠프 API", description= "교육 프로그램 정보 제공 API")
 public class CommercialController {
 	private final CommercialFindUseCase commercialFindUseCase;
 	
@@ -29,7 +29,7 @@ public class CommercialController {
 	}
 	
 	@GetMapping("")
-	@Operation(summary = "부트캠프 정보 조회", description = "부트캠프 목록을 조회")
+	@Operation(summary = "부트캠프 목록 조회", description = "IT 직무 관련 부트캠프와 교육 프로그램 목록을 조회")
 	public ResponseEntity<ApiResponseView<CommercialListView>> getCommercials() {
 		
 		try {
@@ -41,7 +41,7 @@ public class CommercialController {
 			return ResponseEntity.ok(responseView);
 			
 		} catch(Exception e) {
-			log.error("[CommercialController] getCommercials 부트캠프 정보 조회 실패 ", e.getMessage());
+			log.error("[CommercialController] getCommercials 부트캠프 목록 조회 실패 ", e.getMessage(), e);
 			throw new EducationException(MessageType.INTERNAL_SERVER_ERROR);
 		}
 	}
